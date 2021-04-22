@@ -1,0 +1,105 @@
+#' Finite Mixture Modeling for Raw and Binned Data
+#'
+#' The package \code{mixR} performs maximum likelihood estimation for finite
+#' mixture models for families including Normal, Weibull, Gamma and Lognormal via EM algorithm.
+#' It also conducts model selection by using information criteria or bootstrap likelihood ratio
+#' test. The data used for mixture model fitting can be raw data or binned data. The model fitting
+#' is accelerated by using R package Rcpp.
+#'
+#' Finite mixture models can be represented by
+#' \deqn{f(x; \Phi) = \sum_{j = 1}^g \pi_j f_j(x; \theta_j)}
+#' where \eqn{f(x; \Phi)} is the probability density function (p.d.f.) or probability mass function
+#' (p.m.f.) of the mixture model, \eqn{f_j(x; \theta_j)} is the p.d.f. or p.m.f. of the \eqn{j}th
+#' component of the mixture model, \eqn{\pi_j} is the proportion of the \eqn{j}th component and
+#' \eqn{\theta_j} is the parameter of the \eqn{j}th component, which can be a scalar or a vector,
+#' \eqn{\Phi} is a vector of all the parameters of the mixture model. The maximum likelihood
+#' estimate of the parameter vector \eqn{\Phi} can be obtained by using
+#' the EM algorithm (Dempster \emph{et al}, 1977).
+#' The binned data is present sometimes instead of the raw data, for the reason of storage
+#' convenience or necessity. The binned data is recorded in the form of \eqn{(a_i, b_i, n_i)}
+#' where \eqn{a_i} is the lower bound of the \eqn{i}th bin, \eqn{b_i} is
+#' the upper bound of the \eqn{i}th bin, and \eqn{n_i} is the number of observations that fall
+#' in the \eqn{i}th bin, for \eqn{i = 1, \dots, r}, and \eqn{r} is the total number of bins.
+#'
+#' To obtain maximum likelihood estimate of the finite mixture model for binned data, we can
+#' introduce two types of latent variables \eqn{x} and \eqn{z}, where\eqn{x} represents the
+#' value of the unknown raw data, and \eqn{z} is a vector of zeros and one indicating the
+#' component that \eqn{x} belongs to. To use the EM algorithm we first write the complete-data
+#' log-likelihood
+#' \deqn{Q(\Phi; \Phi^{(p)}) = \sum_{j = 1}^{g} \sum_{i = 1}^r n_i z^{(p)} [\log f(x^{(p)}; \theta_j)
+#'  + \log \pi_j ]}
+#'  where \eqn{z^{(p)}} is the expected value of \eqn{z} given the estimated value of \eqn{\Phi}
+#'  and expected value \eqn{x^{(p)}} at \eqn{p}th iteration. The estimated value of \eqn{\Phi}
+#'  can be updated iteratively via the E-step, in which we estimate \eqn{\Phi} by maximizing
+#'  the complete-data loglikelihood, and M-step, in which we calculate the expected value of
+#'  the latent variables \eqn{x} and \eqn{z}. The EM algorithm is terminated by using a stopping
+#'  rule.
+#'  The M-step of the EM algorithm may or may not have closed-form solution (e.g. the Weibull
+#'  mixture model or Gamma mixture model). If not, an iterative approach like Newton's algorithm
+#'  or bisection method may be used.
+#'
+#'  For a given data set, when we have no prior information about the number of components
+#'  \eqn{g}, its value should be estimated from the data. Because mixture models don't satisfy
+#'  the regularity condition for the likelihood ratio test (which requires that the true
+#'  parameter under the null hypothesis should be in the interior of the parameter space
+#'  of the full model under the alternative hypothesis), a bootstrap approach is usually
+#'  used in the literature (see McLachlan (1987, 2004), Feng and McCulloch (1996)). The general
+#'  step of bootstrap likelihood ratio test is as follows.
+#'  \enumerate{
+#'  \item For the given data \eqn{x}, estimate \eqn{\Phi} under both the null and the alternative
+#'  hypothesis to get \eqn{\hat\Phi_0} and \eqn{\hat\Phi_1}. Calculate the observed log-likelihood
+#'  \eqn{\ell(x; \hat\Phi_0)} and \eqn{\ell(x; \hat\Phi_1)}. The likelihood ratio test
+#'  statistic is defined as
+#'  \deqn{w_0 = -2(\ell(x; \hat\Phi_0) - \ell(x; \hat\Phi_1)).}
+#'  \item Generate random data of the same size as the original data \eqn{x} from the model
+#'  under the null hypothesis using estimated parameter \eqn{\hat\Phi_0}, then repeat step
+#'  1 using the simulated data. Repeat this process for \eqn{B} times to get a vector of the
+#'  simulated likelihood ratio test statistics \eqn{w_1^{1}, \dots, w_1^{B}}.
+#'  \item Calculate the empirical p-value
+#'  \deqn{p = \frac{1}{B} \sum_{i=1}^B I(w_1^{(i)} > w_0)}
+#'  where \eqn{I} is the indicator function.
+#'  }
+#'
+#'  This package does the following three things.
+#'  \enumerate{
+#'  \item Fitting finite mixture models for both raw data and binned data by using
+#'  EM algorithm, together with Newton-Raphson algorithm and bisection method.
+#'  \item Do parametric bootstrap likelihood ratio test for two candidate models.
+#'  \item Do model selection by Bayesian information criterion.
+#'  }
+#'
+#'  To speed up computation, the EM algorithm is fulfilled in C++ by using Rcpp
+#'  (Eddelbuettel and Francois (2011)).
+#'
+#'
+#'
+#' @references
+#' Dempster, A. P., Laird, N. M., and Rubin, D. B. Maximum likelihood from incomplete data
+#' via the EM algorithm. \emph{Journal of the royal statistical society. Series B
+#' (methodological)}, pages 1-38, 1977.
+#'
+#' Dirk Eddelbuettel and Romain Francois (2011). Rcpp: Seamless R and C++ Integration.
+#' \emph{Journal of Statistical Software}, 40(8), 1-18. URL http://www.jstatsoft.org/v40/i08/.
+#'
+#' Efron, B. Bootstrap methods: Another look at the jackknife. \emph{Ann. Statist.},
+#' 7(1):1-26, 01 1979.
+#'
+#' Feng, Z. D. and McCulloch, C. E. Using bootstrap likelihood ratios in finite mixture
+#' models. \emph{Journal of the Royal Statistical Society. Series B (Methodological)},
+#' pages 609-617, 1996.
+#'
+#' Lo, Y., Mendell, N. R., and Rubin, D. B. Testing the number of components in a normal
+#' mixture. \emph{Biometrika}, 88(3):767-778, 2001.
+#'
+#' McLachlan, G. J. On bootstrapping the likelihood ratio test statistic for the number
+#' of components in a normal mixture. \emph{Applied statistics}, pages 318-324, 1987.
+#'
+#' McLachlan, G. and Jones, P. Fitting mixture models to grouped and truncated data via
+#' the EM algorithm. \emph{Biometrics}, pages 571-578, 1988.
+#'
+#' McLachlan, G. and Peel, D. \emph{Finite mixture models}. John Wiley & Sons, 2004.
+#'
+#'
+#' @useDynLib mixR
+#' @import Rcpp
+"_PACKAGE"
