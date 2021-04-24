@@ -31,7 +31,7 @@ initz <- function(x, ncomp, init.method = c("kmeans", "hclust")) {
 	if(is.matrix(x)) {
 		x <- reinstate(x)
 	}
-	if(init.method == "k-means") {
+	if(init.method == "kmeans") {
 		a <- kmeans(x, centers = ncomp)$cluster
 	} else {
 		a <- cutree(hclust(dist(x)), ncomp)
