@@ -60,7 +60,7 @@
 #'
 #' @export
 select <- function(x, ncomp, family = c("normal", "weibull", "gamma", "lnorm"),
-mstep.method = c("bisection", "newton"), init.method = c("minibatch-kmeans", "kmeans", "hclust"),
+mstep.method = c("bisection", "newton"), init.method = c("kmeans", "hclust"),
 tol = 1e-6, max_iter = 500) {
   family <- match.arg(family)
   CheckData(x, family)
