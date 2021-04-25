@@ -27,6 +27,7 @@ gammaEM2 <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
 	lambda <- to_shape_rate_gamma(mu, sd)[[2]]
 	
 	count <- x[, 3]
+	ncomp <- length(pi)
 	
 	fit <- gamma_g_C(x, pi, alpha, lambda, method = mstep.method, max_iter, tol)
 	

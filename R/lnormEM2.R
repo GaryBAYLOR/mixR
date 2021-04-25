@@ -28,6 +28,7 @@ lnormEM2 <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
 	sdlog <- pars[[2]]
 	
 	count <- x[, 3]
+	ncomp <- length(pi)
 	
 	fit <- lnorm_g_C(x, pi, mulog, sdlog, max_iter, tol)
 	pi <- fit[[1]]

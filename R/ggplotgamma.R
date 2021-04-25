@@ -30,6 +30,7 @@ ggplotgamma <- function(object, detail, smoothness, title = NULL, xlim, ylim,
 	for(i in 1:length(pi)) {
 		res[ ,i] <-  pi[i] * dgamma(xseq, alpha[i], lambda[i])
 	}
+	res[is.infinite(res)] = 0
 	yt <- apply(res, 1, sum)
 
 	if(missing(ylim)) {

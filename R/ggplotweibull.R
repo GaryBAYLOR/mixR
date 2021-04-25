@@ -30,6 +30,7 @@ ggplotweibull <- function(object, detail, smoothness, title = NULL, xlim, ylim,
 	for(i in 1:length(pi)) {
 		res[ ,i] <-  pi[i] * dweibull(xseq, k[i], lambda[i])
 	}
+	res[is.infinite(res)] = 0
 	yt <- apply(res, 1, sum)
 
 	if(missing(ylim)) {
@@ -49,7 +50,7 @@ ggplotweibull <- function(object, detail, smoothness, title = NULL, xlim, ylim,
 		breaks <- sort(unique(c(data[, 1], data[, 2])))
 		data <- reinstate(data)
 	} else {
-		breaks <- brks
+		breaks <- seq(min(data), max(data), length = breaks + 1)
 	}
 
 	# prepare data frames

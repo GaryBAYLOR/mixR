@@ -32,7 +32,7 @@ initz <- function(x, ncomp, init.method = c("kmeans", "hclust")) {
 		x <- reinstate(x)
 	}
 	if(init.method == "kmeans") {
-		a <- kmeans(x, centers = ncomp)$cluster
+		a <- kmeans(x, centers = ncomp, nstart = 3)$cluster
 	} else {
 		a <- cutree(hclust(dist(x)), ncomp)
 	}

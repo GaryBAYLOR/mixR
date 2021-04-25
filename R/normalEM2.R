@@ -23,6 +23,7 @@ normalEM2 <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
     stop("the length of 'pi', 'mu' and 'sd' should be the same.")
   }	
 	count <- x[, 3]
+	ncomp <- length(pi)
 	
 	if(ev) {
 		fit <- norm_ev_g(x, pi, mu, sd, max_iter, tol)
