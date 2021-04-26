@@ -137,11 +137,11 @@ mixfit <- function(x, ncomp = NULL, family = c("normal", "weibull", "gamma", "ln
 	  res <- eval(mc, environment())
 	  if(!(is.nan(res$bic) & is.na(res$bic))) break
 	  if(retry >= 5) {
-	    print('EM algorithm not converging, please select different initial values')
+	    message('EM algorithm failed to converge')
 	    break
 	  }
 	  retry <- retry + 1
-	  print('EM algorithm not converging, retrying...')
+	  message('EM algorithm is not converging, retrying...')
 	}
 	res
 }

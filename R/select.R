@@ -124,11 +124,11 @@ tol = 1e-6, max_iter = 500) {
     	     tmp <- eval(mc, environment())
     	     if(!(is.nan(tmp$bic) & is.na(tmp$bic))) break
     	     if(retry >= 5) {
-    	       print('EM algorithm not converging, please select different initial values')
+    	       message('EM algorithm failed to converge')
     	       break
     	     }
     	     retry <- retry + 1
-    	     print('EM algorithm not converging, retrying...')
+    	     message('EM algorithm is not converging, retrying...')
     	   }
 	       bic[i] <- tmp$bic
 	    }
