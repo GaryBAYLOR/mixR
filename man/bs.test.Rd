@@ -4,16 +4,24 @@
 \alias{bs.test}
 \title{Bootstrap Likelihood Ratio Test for Finite Mixture Models}
 \usage{
-bs.test(x, ncomp = c(1, 2), family = c("normal", "weibull", "gamma",
-  "lnorm"), B = 100, ev = FALSE, mstep.method = c("bisection", "newton"),
-  init.method = c("kmeans", "hclust"), tol = 1e-06, max_iter = 500)
+bs.test(
+  x,
+  ncomp = c(1, 2),
+  family = c("normal", "weibull", "gamma", "lnorm"),
+  B = 100,
+  ev = FALSE,
+  mstep.method = c("bisection", "newton"),
+  init.method = c("kmeans", "hclust"),
+  tol = 1e-06,
+  max_iter = 500
+)
 }
 \arguments{
 \item{x}{a numeric vector for the raw data or a three-column matrix for the binned data.}
 
 \item{ncomp}{a vector of two positive integers specifying the number of components of the
 mixture model under the null and alternative hypothesis.
-The first integer should be less than the second one. The default value is
+The first integer should be smaller than the second one. The default value is
 \code{c(1, 2)}.}
 
 \item{family}{a character string specifying the family of the mixture model, which can be one
@@ -21,16 +29,15 @@ of \code{normal}, \code{weibull}, \code{gamma}, or \code{lnorm} (default \code{n
 
 \item{B}{the number of bootstrap iterations (default 100).}
 
-\item{ev}{a logical value indicating whether we constrain the variances of each component to
-be equal or not when testing normal mixture models (default \code{FALSE}). \code{ev} is
-ignored when other family members are used.}
+\item{ev}{a logical value indicating whether the variance of each component should be the same
+or not (default \code{FALSE}). \code{ev} is ignored for other family members.}
 
-\item{mstep.method}{the method used in M-step of EM algorithm when using \code{weibull} or
-\code{gamma} family. It is ignored when using \code{normal} or \code{lnorm} family,
+\item{mstep.method}{the method used in M-step of EM algorithm for \code{weibull} or
+\code{gamma} family. It is ignored for \code{normal} or \code{lnorm} family,
 which has closed-form solution in the M-step. The default value is \code{bisection}.}
 
-\item{init.method}{a character string specifying the method used for providing initial values
-for the parameters for EM algorithm. It can be one of \code{kmeans} or \code{hclust}. The default is
+\item{init.method}{a character string specifying the method used for providing the initial values
+for the parameters for the EM algorithm. It can be one of \code{kmeans} or \code{hclust}. The default is
 \code{kmeans}}
 
 \item{tol}{the tolerance for the stopping rule of EM algorithm. It is the value to stop
@@ -47,8 +54,8 @@ contains the following three items.
 \item{w1}{a vector of simulated likelihood ratio test statistics}
 }
 \description{
-This function performs likelihood ratio test by parametric bootstrapping for mixture
-models with two different number of components.
+This function performs the likelihood ratio test by parametric bootstrapping for two mixture
+models with different number of components.
 }
 \details{
 For the given data \code{x} and the specified family, the function \code{bs.test} conducts

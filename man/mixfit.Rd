@@ -4,13 +4,22 @@
 \alias{mixfit}
 \title{Finite Mixture Modeling for Raw Data and Binned Data}
 \usage{
-mixfit(x, ncomp = NULL, family = c("normal", "weibull", "gamma", "lnorm"),
-  pi = NULL, mu = NULL, sd = NULL, ev = FALSE,
-  mstep.method = c("bisection", "newton"), init.method = c("kmeans",
-  "hclust"), tol = 1e-06, max_iter = 500)
+mixfit(
+  x,
+  ncomp = NULL,
+  family = c("normal", "weibull", "gamma", "lnorm"),
+  pi = NULL,
+  mu = NULL,
+  sd = NULL,
+  ev = FALSE,
+  mstep.method = c("bisection", "newton"),
+  init.method = c("kmeans", "hclust"),
+  tol = 1e-06,
+  max_iter = 500
+)
 }
 \arguments{
-\item{x}{a numeric vector for row data or a three-column matrix for the binned data}
+\item{x}{a numeric vector for the raw data or a three-column matrix for the binned data}
 
 \item{ncomp}{a positive integer specifying the number of components of the mixture model}
 
@@ -64,9 +73,9 @@ For the lognormal mixture model, the following extra items are returned.
 each component}
 }
 \description{
-This function is used to perform maximum likelihood estimation for
-a variety of finite mixture models for both raw data and binned data, by using
-the EM algorithm, combining Newton-Raphson algorithm or bisection method when necessary.
+This function is used to perform the maximum likelihood estimation for
+a variety of finite mixture models for both raw and binned data by using
+the EM algorithm, together with Newton-Raphson algorithm or bisection method when necessary.
 }
 \details{
 The function \code{mixfit} is the core function in this package. It is used to perform

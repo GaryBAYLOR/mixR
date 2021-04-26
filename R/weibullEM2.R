@@ -27,6 +27,7 @@ weibullEM2 <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
   lambda <- to_k_lambda_weibull(mu, sd)$lambda	
 	
 	count <- x[, 3]
+	ncomp <- length(pi)
 	
 	iter <- 1
 	fit <- weib_g_C(x, pi, k, lambda, method = mstep.method, max_iter, tol)	

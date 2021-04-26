@@ -2,12 +2,12 @@
 % Please edit documentation in R/initz.R
 \name{initz}
 \alias{initz}
-\title{Initialization of EM Algorithm}
+\title{Initialization of the EM Algorithm}
 \usage{
 initz(x, ncomp, init.method = c("kmeans", "hclust"))
 }
 \arguments{
-\item{x}{a numeric vector for raw data or a three-column matrix for binned data}
+\item{x}{a numeric vector of the raw data or a three-column matrix of the binned data}
 
 \item{ncomp}{a positive integer specifying the number of components for a mixture model}
 
@@ -22,7 +22,7 @@ initz(x, ncomp, init.method = c("kmeans", "hclust"))
 }
 \description{
 This function returns the mean and standard deviation of each component by using
-K-means clustering method or hierarchical clustering method.
+K-means clustering or hierarchical clustering.
 }
 \details{
 The function \code{initz} returns the mean and standard deviation of each component

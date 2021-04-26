@@ -4,8 +4,7 @@
 \alias{plot.mixfitEM}
 \title{Plotting the Fitted Mixture Models}
 \usage{
-\method{plot}{mixfitEM}(x, ps = c("base", "ggplot2"), detail = TRUE,
-  smoothness = 512, ...)
+\method{plot}{mixfitEM}(x, ps = c("base", "ggplot2"), detail = TRUE, smoothness = 512, ...)
 }
 \arguments{
 \item{x}{an object of class \code{mixfitEM}, usually an output from the function \code{\link{mixfit}}}

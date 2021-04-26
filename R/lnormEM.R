@@ -23,6 +23,7 @@ lnormEM <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
     stop("the length of 'pi', 'mu' and 'sd' should be the same.")
   }	
   n <- length(x)
+  ncomp <- length(pi)
   
 	pars <- to_mulog_sdlog_lnorm(mu, sd)
 	mulog <- pars[[1]]

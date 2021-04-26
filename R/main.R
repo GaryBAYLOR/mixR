@@ -1,26 +1,8 @@
-## The main function
-
-## (edition 1) not using match.call
-## mixfit2 <- function(x, ncomp = NULL, family = c("normal", "weibull", "gamma", "lnorm"),
-##                     pi = NULL, mu = NULL, sd = NULL, ev = FALSE, method = c("bisection", "newton"),
-##                     tol = 1e-6, max_iter = 500) {
-##  CheckData(x)
-##  type <- match.arg(family)
-## 	method <- match.arg(method)
-## 	args <- mget(names(formals()), sys.frame(sys.nframe()))
-## 	args$family <- NULL
-##     args$method <- method
-##
-## 	fun.name <- ifelse(!is.matrix(x), paste0(type, "EM"), paste0(type, "EM2"))
-	#do.call(fun.name, args)
-## 	args
-## }
-
 #' Finite Mixture Modeling for Raw Data and Binned Data
 #'
-#' This function is used to perform maximum likelihood estimation for
-#' a variety of finite mixture models for both raw data and binned data, by using
-#' the EM algorithm, combining Newton-Raphson algorithm or bisection method when necessary.
+#' This function is used to perform the maximum likelihood estimation for
+#' a variety of finite mixture models for both raw and binned data by using
+#' the EM algorithm, together with Newton-Raphson algorithm or bisection method when necessary.
 #'
 #' The function \code{mixfit} is the core function in this package. It is used to perform
 #' the maximum likelihood estimation for finite mixture models from the families of normal,
@@ -38,7 +20,7 @@
 #' generated. For the normal mixture models, we can
 #' control whether each component has the same variance or not.
 #'
-#' @param x a numeric vector for row data or a three-column matrix for the binned data
+#' @param x a numeric vector for the raw data or a three-column matrix for the binned data
 #' @param ncomp a positive integer specifying the number of components of the mixture model
 #' @param family a character string specifying the family of the mixture model. It can only be
 #' one element from \code{normal}, \code{weibull}, \code{gamma} or \code{lnorm}.
@@ -129,7 +111,21 @@ mixfit <- function(x, ncomp = NULL, family = c("normal", "weibull", "gamma", "ln
 
 	fun.name <- ifelse(!is.matrix(x), paste0(family, "EM"), paste0(family, "EM2"))
 	mc[[1]] <- as.name(fun.name)
-	eval(mc, environment())
+	res = eval(mc, environment())
+	
+	retry <- 0
+	
+	repeat {
+	  res <- eval(mc, environment())
+	  if(!(is.nan(res$bic) & is.na(res$bic))) break
+	  if(retry >= 5) {
+	    message('EM algorithm failed to converge')
+	    break
+	  }
+	  retry <- retry + 1
+	  message('EM algorithm is not converging, retrying...')
+	}
+	res
 }
 
 

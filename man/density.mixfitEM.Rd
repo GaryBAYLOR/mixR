@@ -4,8 +4,7 @@
 \alias{density.mixfitEM}
 \title{The Density of Finite Mixture Models}
 \usage{
-\method{density}{mixfitEM}(x, smoothness = 512, from = NULL, to = NULL,
-  cut = 3.5, ...)
+\method{density}{mixfitEM}(x, smoothness = 512, from = NULL, to = NULL, cut = 3.5, ...)
 }
 \arguments{
 \item{x}{an object of class \code{mixfitEM}}

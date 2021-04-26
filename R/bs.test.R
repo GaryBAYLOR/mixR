@@ -1,7 +1,7 @@
 #' Bootstrap Likelihood Ratio Test for Finite Mixture Models
 #'
-#' This function performs likelihood ratio test by parametric bootstrapping for mixture
-#' models with two different number of components.
+#' This function performs the likelihood ratio test by parametric bootstrapping for two mixture
+#' models with different number of components.
 #'
 #' For the given data \code{x} and the specified family, the function \code{bs.test} conducts
 #' a bootstrap likelihood ratio test for two mixture models with the number of components
@@ -10,19 +10,18 @@
 #' @param x a numeric vector for the raw data or a three-column matrix for the binned data.
 #' @param ncomp a vector of two positive integers specifying the number of components of the
 #' mixture model under the null and alternative hypothesis.
-#' The first integer should be less than the second one. The default value is
+#' The first integer should be smaller than the second one. The default value is
 #' \code{c(1, 2)}.
 #' @param family a character string specifying the family of the mixture model, which can be one
 #'  of \code{normal}, \code{weibull}, \code{gamma}, or \code{lnorm} (default \code{normal}).
 #' @param B the number of bootstrap iterations (default 100).
-#' @param ev a logical value indicating whether we constrain the variances of each component to
-#' be equal or not when testing normal mixture models (default \code{FALSE}). \code{ev} is
-#' ignored when other family members are used.
-#' @param mstep.method the method used in M-step of EM algorithm when using \code{weibull} or
-#' \code{gamma} family. It is ignored when using \code{normal} or \code{lnorm} family,
+#' @param ev a logical value indicating whether the variance of each component should be the same
+#' or not (default \code{FALSE}). \code{ev} is ignored for other family members.
+#' @param mstep.method the method used in M-step of EM algorithm for \code{weibull} or
+#' \code{gamma} family. It is ignored for \code{normal} or \code{lnorm} family,
 #' which has closed-form solution in the M-step. The default value is \code{bisection}.
-#' @param init.method a character string specifying the method used for providing initial values
-#' for the parameters for EM algorithm. It can be one of \code{kmeans} or \code{hclust}. The default is
+#' @param init.method a character string specifying the method used for providing the initial values
+#' for the parameters for the EM algorithm. It can be one of \code{kmeans} or \code{hclust}. The default is
 #' \code{kmeans}
 #' @param tol the tolerance for the stopping rule of EM algorithm. It is the value to stop
 #' EM algorithm when the two consecutive iterations produces log-likelihood with difference

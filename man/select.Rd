@@ -4,9 +4,15 @@
 \alias{select}
 \title{Finite Mixture Model Selection by Information Criterion}
 \usage{
-select(x, ncomp, family = c("normal", "weibull", "gamma", "lnorm"),
-  mstep.method = c("bisection", "newton"), init.method = c("kmeans",
-  "hclust"), tol = 1e-06, max_iter = 500)
+select(
+  x,
+  ncomp,
+  family = c("normal", "weibull", "gamma", "lnorm"),
+  mstep.method = c("bisection", "newton"),
+  init.method = c("kmeans", "hclust"),
+  tol = 1e-06,
+  max_iter = 500
+)
 }
 \arguments{
 \item{x}{a numeric vector for raw data or a three-column matrix for the binned data}

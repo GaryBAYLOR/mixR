@@ -15,6 +15,7 @@ plotlnorm <- function(x, detail, smoothness, breaks, xlim, ylim, lwd, lty, ...) 
 	for(i in 1:length(pi)) {
 		res[ ,i] <-  pi[i] * dlnorm(xseq, mulog[i], sdlog[i])
 	}
+	res[is.infinite(res)] = 0
 	yt <- apply(res, 1, sum)
 
 	# plot parameters checking

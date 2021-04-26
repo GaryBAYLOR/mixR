@@ -45,7 +45,7 @@ log-likelihood
  mixture model or Gamma mixture model). If not, an iterative approach like Newton's algorithm
  or bisection method may be used.
 
-For a given data set, when we have no prior information about the number of components
+ For a given data set, when we have no prior information about the number of components
  \eqn{g}, its value should be estimated from the data. Because mixture models don't satisfy
  the regularity condition for the likelihood ratio test (which requires that the true
  parameter under the null hypothesis should be in the interior of the parameter space
@@ -67,7 +67,7 @@ For a given data set, when we have no prior information about the number of comp
  where \eqn{I} is the indicator function.
  }
 
-This package does the following three things.
+ This package does the following three things.
  \enumerate{
  \item Fitting finite mixture models for both raw data and binned data by using
  EM algorithm, together with Newton-Raphson algorithm and bisection method.
@@ -75,7 +75,7 @@ This package does the following three things.
  \item Do model selection by Bayesian information criterion.
  }
 
-To speed up computation, the EM algorithm is fulfilled in C++ by using Rcpp
+ To speed up computation, the EM algorithm is fulfilled in C++ by using Rcpp
  (Eddelbuettel and Francois (2011)).
 }
 \references{
