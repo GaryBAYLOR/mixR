@@ -4,7 +4,9 @@
 \name{Stamp}
 \alias{Stamp}
 \title{1872 Hidalgo Stamp Data}
-\format{A vector with 485 measurements of the thickness (nm) of the stamps}
+\format{
+A vector with 485 measurements of the thickness (nm) of the stamps
+}
 \usage{
 Stamp
 }

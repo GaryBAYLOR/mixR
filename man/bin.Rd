@@ -7,21 +7,22 @@
 bin(x, brks)
 }
 \arguments{
-\item{x}{a numeric vector}
+\item{x}{a numeric vector of raw data}
 
-\item{brks}{a numeric vector in increasing order, representing the value of each bin}
+\item{brks}{a numeric vector in increasing order, representing the bin values within each of which 
+we want to calculate the frequency of the data}
 }
 \value{
 The function \code{bin} returns a matrix with three columns, representing the value of the left bin, the value of the right bin and the number of observations in \code{x} that falls in each bin.
 }
 \description{
-This function creates a binned data from a numeric vector
+This function creates a binned data set from the raw data
 }
 \details{
-Given a numeric vector, the function \code{bin} creates binned data with bin value provided
-by \code{brks}. Fitting mixture models with a large dataset may be slow, especially when
-we want to fit a mixture model outside of normal family. Binning the data with a relatively
-small binwidth speeds up the computation of EM algorithm while at the same time keeps the
+Given a numeric vector, the function \code{bin} creates a binned data set with bin values provided
+by \code{brks}. Fitting mixture models with a large data set may be slow, especially when
+we want to fit non-normal mixture models. Binning the data with a relatively
+small bin width speeds up the computation of EM algorithm while at the same time keeps the
 precision of the estimation result.
 }
 \examples{

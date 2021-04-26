@@ -4,12 +4,14 @@
 \name{Stamp2}
 \alias{Stamp2}
 \title{1872 Hidalgo Stamp Data (Binned)}
-\format{A matrix with 62 rows and 3 columns:
+\format{
+A matrix with 62 rows and 3 columns:
 \describe{
  \item{lower}{the lower bin values}
  \item{upper}{the upper bin values}
  \item{freq}{the number of observations in each bin}
-}}
+}
+}
 \usage{
 Stamp2
 }

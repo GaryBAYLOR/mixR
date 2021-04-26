@@ -1,7 +1,7 @@
-#' Initialization of EM Algorithm
+#' Initialization of the EM Algorithm
 #'
 #' This function returns the mean and standard deviation of each component by using
-#' K-means clustering method or hierarchical clustering method.
+#' K-means clustering or hierarchical clustering.
 #'
 #' The function \code{initz} returns the mean and standard deviation of each component
 #' of a mixture model by using K-means clustering algorithm, or hierarchical clustering
@@ -9,7 +9,7 @@
 #' so as to enable mixture model selection by bootstrapping likelihood ratio test or
 #' using information criteria.
 #'
-#' @param x a numeric vector for raw data or a three-column matrix for binned data
+#' @param x a numeric vector of the raw data or a three-column matrix of the binned data
 #' @param ncomp a positive integer specifying the number of components for a mixture model
 #' @param init.method the method used for providing initial values, which can be one of
 #' \code{kmeans} or \code{hclust}.
