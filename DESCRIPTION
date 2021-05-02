@@ -17,3 +17,7 @@ Packaged: 2018-06-06 15:57:05 UTC; youjiao_yu
 Author: Youjiao Yu [aut, cre]
 Repository: CRAN
 Date/Publication: 2018-06-07 13:50:35 UTC
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
