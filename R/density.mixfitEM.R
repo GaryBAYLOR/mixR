@@ -5,18 +5,17 @@
 #' The function \code{density.mixfitEM} is the method of the generic function
 #' \code{density} for the class \code{mixfitEM}.
 #'
-#' @param x an object of class \code{mixfitEM}
+#' @param obj an object of class \code{mixfitEM}
+#' @param at a scalar or a numeric vector of locations where densities are calculated
 #' @param smoothness a positive integer controlling the smoothness of the density curve (default 512).
 #' The higher this value is, the more locations of the mixture model the density is calculated.
-#' @param from the starting location the density is going to be calculated
-#' @param to the ending location the density is going to be computed
-#' @param cut the number of standard deviations away the density is to be computed (default 3.5)
-#' @param ... other arguments passed to \code{\link[stats]{density}}
-#' @return This function returns a list of class \code{density}, which contains the following
+#' @param cut the number of standard deviations away the density is to be computed (default 3.8)
+#' @return This function returns a list of class \code{densityEM}, which contains the following
 #' items.
-#' \item{x}{a numeric vector of locations where density is calculated.}
-#' \item{y}{the density of the mixture model at the corresponding locations in \code{x}}
-#'
+#' \item{x}{a scalar or a numeric vector of locations where densities are calculated.}
+#' \item{y}{a vector of the densities of the mixture model at the corresponding locations in \code{x}}
+#' \item{comp}{a matrix with columns representing the densities of each component in the mixture model at the corresponding locations in \code{x}}
+#' 
 #' @seealso \code{\link{mixfit}}
 #'
 #' @examples
@@ -30,13 +29,13 @@
 #' @export
 #' @import graphics
 #' @import stats
-density.mixfitEM <- function(x, smoothness = 512, from = NULL, to = NULL, cut = 3.5, ...) {
-	mc <- match.call()
-	family <- x$family
-	mc$smoothness <- smoothness
-	mc$cut <- cut
-	mc[[1]] <- as.name(paste0("density", family))
-	eval(mc, envir = environment())
-}
 
+density.mixfitEM = function(obj, at, smoothness = 512, cut = 3.8) {
+  mc <- match.call()
+  family <- obj$family
+  mc$smoothness <- smoothness
+  mc$cut <- cut
+  mc[[1]] <- as.name(paste0("density", family))
+  eval(mc, envir = environment())
+}
 
