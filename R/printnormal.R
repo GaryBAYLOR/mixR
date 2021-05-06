@@ -14,6 +14,7 @@ printnormal <- function(x, digits) {
 	cat(paste("Normal mixture model with", ncomp, "components\n"))
 	print(round(res1, digits))
 	cat("\n")
-	cat(paste(c("EM iterations:", x$iter, "AIC:", round(x$aic, digits), 
-	"BIC:", round(x$bic, digits), "log-likelihood:", round(x$loglik, digits))))
+	cat(paste(c("EM iterations:", x$iter, "AIC:", round(x$aic, 2), 
+	"BIC:", round(x$bic, 2), "log-likelihood:", round(x$loglik, 2))))
+	cat('\n')
 }
