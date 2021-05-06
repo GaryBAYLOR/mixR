@@ -1,9 +1,9 @@
-densitylnorm <- function(obj, at, smoothness, cut) {
-  pi <- obj$pi
-  mu <- obj$mu
-  sd <- obj$sd
-  mulog <- obj$mulog
-  sdlog <- obj$sdlog
+densitylnorm <- function(x, at, smoothness, cut) {
+  pi <- x$pi
+  mu <- x$mu
+  sd <- x$sd
+  mulog <- x$mulog
+  sdlog <- x$sdlog
   if(missing(at)) {
     from <- max(min(mu - cut * sd), 0)
     to <- max(mu + 1.1 * cut * sd)

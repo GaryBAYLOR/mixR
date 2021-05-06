@@ -1,9 +1,9 @@
-densitygamma <- function(obj, at, smoothness, cut) {
-  pi <- obj$pi
-  mu <- obj$mu
-  sd <- obj$sd
-  alpha <- obj$alpha
-  lambda <- obj$lambda
+densitygamma <- function(x, at, smoothness, cut) {
+  pi <- x$pi
+  mu <- x$mu
+  sd <- x$sd
+  alpha <- x$alpha
+  lambda <- x$lambda
   if(missing(at)) {
     from <- max(min(mu - cut * sd), 0)
     to <- max(mu + 1.1 * cut * sd)

@@ -10,7 +10,7 @@
 #' The parameters that control the appearance of the histogram and the density curve can be changed.
 #' The density curve of each component can be shown or hidden.
 #'
-#' @param obj an object of class \code{mixfitEM}, an output from the function \code{\link{mixfit}}
+#' @param x an object of class \code{mixfitEM}, an output from the function \code{\link{mixfit}}
 #' @param theme a string the specifies the appearence of the plot, which is from the ggplot2 and could
 #' be one of'gray', 'bw' (default), 'linedraw', 'light', 'dark', 'minimal', 'classic', or 'void'.
 #' @param add_hist a logical value specifying whether a histogram of data should be plotted
@@ -34,24 +34,8 @@
 #' @param legend.text an object returned by element_text() to specify the appearance of the legend text
 #' @param legend.position the position of the legend, could be 'right'(default), 'right', 'top', or 'bottom'
 #' @param legend.direction the direction of the legend, could be 'vertical' (default) or 'horizontal'
+#' @param ... other arguments
 #' 
-#' \describe{
-#' \item{xlim}{a numeric vector of length 2 specifying the range of x-axis of the plot}
-#' \item{ylim}{a numeric vector of length 2 specifying the range of y-axis of the plot}
-#' \item{lty}{the line type of the mixture density curve, default 1}
-#' \item{lwd}{the line width of the mixture density curve, default 2}
-#' \item{color}{the line color of the mixture density curve, default "black"}
-#' \item{...}{arguments passed to \code{\link{hist}}}
-#' }
-#' or the following parameters if we specify family as \code{ggplot2}:
-#' \describe{
-#' \item{xlim}{a numeric vector of length 2 specifying the range of x-axis of the plot}
-#' \item{ylim}{a numeric vector of length 2 specifying the range of y-axis of the plot}
-#' \item{theme}{the background of the plot, can be "grey" or "bw" (default "grey")}
-#' \item{trans}{the transparency of the plot, default 0.5}
-#' \item{...}{arguments passed to \code{\link[ggplot2]{geom_path}}}
-#' }
-#'
 #' @seealso \code{\link{mixfit}}
 #'
 #' @examples
@@ -62,7 +46,7 @@
 #'
 #' @export
 #' @import ggplot2
-plot.mixfitEM = function(obj, 
+plot.mixfitEM = function(x, 
                          theme = NULL, 
                          add_hist = TRUE, add_poly = TRUE, add_legend = TRUE,
                          smoothness = 512, 
@@ -79,19 +63,20 @@ plot.mixfitEM = function(obj,
                          legend.title = element_text(),
                          legend.text = element_text(),
                          legend.position = 'right',
-                         legend.direction = ifelse(legend.position %in% c('top', 'bottom'), 'horizontal', 'vertical')
+                         legend.direction = ifelse(legend.position %in% c('top', 'bottom'), 'horizontal', 'vertical'),
+                         ...
 ) {
   if(is.null(theme)) theme = 'bw'
   if(!theme %in% tolower(c('gray', 'bw', 'linedraw', 'light', 'dark', 'minimal', 'classic', 'void'))) {
-    error("'theme' must be one of 'gray', 'bw', 'linedraw', 'light', 'dark', 'minimal', 'classic', 'void'.")
+    stop("'theme' must be one of 'gray', 'bw', 'linedraw', 'light', 'dark', 'minimal', 'classic', 'void'.")
   }
   
-  family <- obj$family
-  ncomp <- length(obj$pi)
-  data = obj$data
+  family <- x$family
+  ncomp <- length(x$pi)
+  data = x$data
   
   # calculate density of the plotting object
-  d = density(obj, smoothness = smoothness, cut = cut)
+  d = density(x, smoothness = smoothness, cut = cut)
   d$comp[is.infinite((d$comp))] = 0
   d$y[is.infinite(d$y)] = 0
   
@@ -115,16 +100,11 @@ plot.mixfitEM = function(obj,
   xlim = c(min(d$x) - range * 0.05, max(d$x) + range * 0.05)
   
   # set ylim
-  if(is.matrix(data)) {
-    count <- data[, 3]
-    max_freq <- max(count) / (sum(count) * max(diff(data[, 1])))
-    ylim <- c(0, max(c(d$y, max_freq * 1.05)))
-  } else {
-    tmp <- bin(data, brks = breaks)
-    count <- tmp[, 3]
-    max_freq <- max(count) / (sum(count) * (breaks[2] - breaks[1]))
-    ylim <- c(0, max(c(d$y, max_freq * 1.05)))
-  }
+  tmp <- bin(data, brks = breaks)
+  count <- tmp[, 3]
+  max_freq <- max(count) / (sum(count) * (breaks[2] - breaks[1]))
+  ylim <- c(0, max(c(d$y, max_freq * 1.05)))
+
   
   # set xlab, ylab, title
   if(missing(xlab)) {

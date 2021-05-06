@@ -4,38 +4,79 @@
 \alias{plot.mixfitEM}
 \title{Plotting the Fitted Mixture Models}
 \usage{
-\method{plot}{mixfitEM}(x, ps = c("base", "ggplot2"), detail = TRUE, smoothness = 512, ...)
+\method{plot}{mixfitEM}(
+  x,
+  theme = NULL,
+  add_hist = TRUE,
+  add_poly = TRUE,
+  add_legend = TRUE,
+  smoothness = 512,
+  trans = 0.5,
+  cut = 3.8,
+  xlab,
+  ylab,
+  title,
+  breaks,
+  plot.title = element_text(hjust = 0.5),
+  axis.text.x = element_text(),
+  axis.text.y = element_text(),
+  axis.title.x = element_text(),
+  axis.title.y = element_text(),
+  legend.title = element_text(),
+  legend.text = element_text(),
+  legend.position = "right",
+  legend.direction = ifelse(legend.position \%in\% c("top", "bottom"), "horizontal",
+    "vertical"),
+  ...
+)
 }
 \arguments{
-\item{x}{an object of class \code{mixfitEM}, usually an output from the function \code{\link{mixfit}}}
+\item{x}{an object of class \code{mixfitEM}, an output from the function \code{\link{mixfit}}}
 
-\item{ps}{a character string to select the plotting system, which can be \code{base} (default),
-or \code{ggplot2}}
+\item{theme}{a string the specifies the appearence of the plot, which is from the ggplot2 and could
+be one of'gray', 'bw' (default), 'linedraw', 'light', 'dark', 'minimal', 'classic', or 'void'.}
 
-\item{detail}{a logical value controlling whether to show each component of the fitted mixture model
-(default \code{TRUE})}
+\item{add_hist}{a logical value specifying whether a histogram of data should be plotted}
+
+\item{add_poly}{a logical value specifying whether a polygon of each component should be plotted.}
+
+\item{add_legend}{a logical value specifying whether the legend should be plotted.}
 
 \item{smoothness}{a positive integer controlling the smoothness of the density curve in the plot.
 The default value is 512 and increasing this value will produce smoother curve.}
 
-\item{...}{the other parameters controlling the appearance of the plot, which are the following
-parameters if we specify family as \code{base}:
-\describe{
-\item{xlim}{a numeric vector of length 2 specifying the range of x-axis of the plot}
-\item{ylim}{a numeric vector of length 2 specifying the range of y-axis of the plot}
-\item{lty}{the line type of the mixture density curve, default 1}
-\item{lwd}{the line width of the mixture density curve, default 2}
-\item{color}{the line color of the mixture density curve, default "black"}
-\item{...}{arguments passed to \code{\link{hist}}}
-}
-or the following parameters if we specify family as \code{ggplot2}:
-\describe{
-\item{xlim}{a numeric vector of length 2 specifying the range of x-axis of the plot}
-\item{ylim}{a numeric vector of length 2 specifying the range of y-axis of the plot}
-\item{theme}{the background of the plot, can be "grey" or "bw" (default "grey")}
-\item{trans}{the transparency of the plot, default 0.5}
-\item{...}{arguments passed to \code{\link[ggplot2]{geom_path}}}
-}}
+\item{trans}{the transparency of the polygons if they are plotted (default 0.5)}
+
+\item{cut}{the number of standard deviations from the center of each component we want to plot 
+the density (default 3.8)}
+
+\item{xlab}{the label for x axis}
+
+\item{ylab}{the label for y axis}
+
+\item{title}{the title of the plot}
+
+\item{breaks}{the number of bins used for plotting the histogram}
+
+\item{plot.title}{an object returned by element_text() to specify the appearance of the title}
+
+\item{axis.text.x}{an object returned by element_text() to specify the appearance of the x axis}
+
+\item{axis.text.y}{an object returned by element_text() to specify the appearance of the y axis}
+
+\item{axis.title.x}{an object returned by element_text() to specify the appearance of the label along x axis}
+
+\item{axis.title.y}{an object returned by element_text() to specify the appearance of the label along y axis}
+
+\item{legend.title}{an object returned by element_text() to specify the appearance of the legend title}
+
+\item{legend.text}{an object returned by element_text() to specify the appearance of the legend text}
+
+\item{legend.position}{the position of the legend, could be 'right'(default), 'right', 'top', or 'bottom'}
+
+\item{legend.direction}{the direction of the legend, could be 'vertical' (default) or 'horizontal'}
+
+\item{...}{other arguments}
 }
 \description{
 This is the plot method for the class \code{mixfitEM}. It is used to plot the fitted mixture models
@@ -51,9 +92,9 @@ The density curve of each component can be shown or hidden.
 }
 \examples{
 x <- rmixnormal(200, c(0.3, 0.7), c(2, 5), c(1, 0.7))
-fit <- mixfit(x, ncomp = 2)
-plot(fit)  # base R plotting system
-plot(fit, "ggplot2")  # ggplot2 plotting system
+mod <- mixfit(x, ncomp = 2)
+plot(mod)
+plot(mod, theme = 'classic') 
 
 }
 \seealso{

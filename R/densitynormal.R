@@ -1,7 +1,7 @@
-densitynormal <- function(obj, at, smoothness, cut) {
-  pi <- obj$pi
-  mu <- obj$mu
-  sd <- obj$sd
+densitynormal <- function(x, at, smoothness, cut) {
+  pi <- x$pi
+  mu <- x$mu
+  sd <- x$sd
   if(missing(at)) {
     from <- min(mu - cut * sd)
     to <- max(mu + cut * sd)

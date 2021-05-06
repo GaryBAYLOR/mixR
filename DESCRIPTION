@@ -1,19 +1,17 @@
 Package: mixR
 Type: Package
 Title: Finite Mixture Modeling for Raw and Binned Data
-Version: 0.1.1
-Date: 2018-06-05
+Version: 0.2.0
+Date: 2021-05-06
 Authors@R: person("Youjiao", "Yu", email = "jiaoisjiao@gmail.com",
                   role = c("aut", "cre"))
 Maintainer: Youjiao Yu <jiaoisjiao@gmail.com>
 Description: Performs maximum likelihood estimation for finite mixture models for families including Normal, Weibull, Gamma and Lognormal by using EM algorithm, together with Newton-Raphson algorithm or bisection method when necessary. It also conducts mixture model selection by using information criteria or bootstrap likelihood ratio test. The data used for mixture model fitting can be raw data or binned data. The model fitting process is accelerated by using R package 'Rcpp'.
 License: GPL (>= 2)
 LazyData: TRUE
-Imports: ggplot2 (>= 2.1.0), graphics, Rcpp (>= 0.12.8), stats
+Imports: ggplot2 (>= 3.3.3), graphics, Rcpp (>= 1.0.6), stats
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
 NeedsCompilation: yes
-Packaged: 2018-06-06 15:57:05 UTC; youjiao_yu
 Author: Youjiao Yu [aut, cre]
 Repository: CRAN
-Date/Publication: 2018-06-07 13:50:35 UTC
