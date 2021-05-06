@@ -29,7 +29,7 @@ bin <- function(x, brks) {
 	colnames(res) <- c("a", "b", "freq")
 	res[,1] <- brks[-k]
 	res[,2] <- brks[-1]
-	temp <- .bincode(x, brks)
+	temp <- .bincode(x, brks, include.lowest = TRUE)
 	temp <- temp[!is.na(temp)]
 
 	for(i in 1:(k-1)) {
