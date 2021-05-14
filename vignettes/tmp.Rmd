@@ -2,6 +2,10 @@
 output: 
   stevetemplates::article:
     fig_caption: true
+vignette: >
+  %\VignetteIndexEntry{An Introduction to mixR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 #bibliography: master.bib
 biblio-style: apsr
 title: "An Introduction to mixR"
@@ -104,8 +108,8 @@ mod1 = mixfit(x1, ncomp = 2); mod1
 # Normal mixture model (equal variance)
 mod1_ev = mixfit(x1, ncomp = 2, ev = TRUE); mod1_ev
 
-plot(mod1, ps = 'ggplot', breaks = 30, title = 'Normal Mixture (unequal variances)')
-plot(mod1_ev, ps = 'ggplot', breaks = 30, title = 'Normal Mixture (equal variance)')
+plot(mod1, title = 'Normal Mixture (unequal variances)')
+plot(mod1_ev, title = 'Normal Mixture (equal variance)')
 ```
 
 The initial values for the parameters will be estimated by k-means or hierarchical clustering method if they are not provided manually by the users. In cases when the EM algorithm is stuck in a local minimum and leads to unsatisfactory fitting results, which could happen when the number of components in the mixture model is relatively large and/or the data size is large, initial values can be provided manually to get a better fitting.
@@ -123,25 +127,23 @@ mod2_weibull
 
 mod2_normal
 
-plot(mod2_weibull, ps = 'ggplot')
-plot(mod2_normal, ps = 'ggplot')
+plot(mod2_weibull)
+plot(mod2_normal)
 ```
 
 To find out the best value of $g$ for the Weibull and Normal mixture models if we fit both of them to the data set `x2`, we can fit a series of mixture models with different values of $g$, and select the best $g$ using the information criterion BIC. This can be done by the function `select()` in the mixR package. From Figure 3 we see that the best Weibull mixture model has $g = 2$ and the best Normal mixture model has $g = 4$ with equal variance for each component. 
 ```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="The values of BIC for Weibull mixture models (left) and Normal mixture models (right) with different values of $g$. The model with the lowest value of BIC is regarded as the best."}
 # Selecting the best g for Weibull mixture model
 s_weibull = select(x2, ncomp = 2:6, family = 'weibull')
-
 # Selecting the best g for Normal mixture model
 s_normal = select(x2, ncomp = 2:6)
-
 plot(s_weibull)
 plot(s_normal)
 ```
 
 ```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="The fitted Weibull mixture model with $g = 2$ (left) and the Normal mixture model with $g = 4$ and equal variance (right)"}
-plot(mod2_weibull, ps = 'ggplot')
-plot(mixfit(x2, ncomp = 4, ev = TRUE), ps = 'ggplot')
+plot(mod2_weibull)
+plot(mixfit(x2, ncomp = 4, ev = TRUE))
 ```
 
 ## Model selection
@@ -173,12 +175,12 @@ It occurs that the data used to fit a mixture model don't have their original va
 head(Stamp)
 mod_stamp = mixfit(Stamp, ncomp = 3)
 mod_stamp
-plot(mod_stamp, 'ggplot', title = 'Normal Mixture Model for the Original Data')
+plot(mod_stamp, title = 'Normal Mixture Model for the Original Data')
 
 head(Stamp2)
 mod_stamp2 = mixfit(Stamp2, ncomp = 3)
 mod_stamp2
-plot(mod_stamp2, 'ggplot', title = 'Normal Mixture Model for the Binned Data')
+plot(mod_stamp2, title = 'Normal Mixture Model for the Binned Data')
 ```
 
 mixR package provides two functions: `bin()` for converting original data to binned data, and `reinstate()` for simulating the original data with binned data. As binning is actually a way to compress data, fitting mixture models on binned data can accelerate the fitting process when the original data set is large.
@@ -207,7 +209,7 @@ t2 = Sys.time()
 t2 - t1
 
 mod_large
-plot(mod_large, ps = 'ggplot', title = 'Normal Mixture Model for Original Data')
+plot(mod_large, title = 'Normal Mixture Model for Original Data')
 
 # fitting mixture models on binned data
 t3 = Sys.time()
@@ -217,7 +219,7 @@ t4 = Sys.time()
 t4 - t3
 
 mod_binned
-plot(mod_binned, ps = 'ggplot', title = 'Normal Mixture Model for Binned Data')
+plot(mod_binned, title = 'Normal Mixture Model for Binned Data')
 ```
 
 ```{r, fig.show="hold", out.width="80%", cache=TRUE, eval=TRUE}
@@ -235,7 +237,7 @@ mod_binned_weibull <- mixfit(x_binned_weibull, ncomp = ncomp, family = 'weibull'
 t6 = Sys.time()
 t6 - t5
 
-plot(mod_binned_weibull, ps = 'ggplot', title = 'Weibull Mixture Model for Binned Data')
+plot(mod_binned_weibull, title = 'Weibull Mixture Model for Binned Data')
 ```
 
 ```{r, echo=FALSE}
