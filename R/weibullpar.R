@@ -53,19 +53,29 @@ to_mu_sd_weibull <- function(k, lambda) {
 #'
 #' @export
 to_k_lambda_weibull <- function(mu, sd) {
-  delta = (mu / sd)^2
-  f <- function(z) {
-    (1 + delta) * gamma(z)^2 - delta * gamma(2 * z -1)
+  to_k_lambda_weibull_inner <- function(mu, sd) {
+    delta <- (mu / sd)^2
+    f <- function(z) {
+      (1 + delta) * gamma(z)^2 - delta * gamma(2 * z -1)
+    }
+    
+    # initial values for z_right (z_left is kept at 1 as f(1) is always 1)
+    z_right <- 2
+    while (f(z_right) > 0) z_right <- z_right * 2
+    
+    # find root of f(z) = 0
+    z_root <- uniroot(f, c(1, z_right))$root
+    k <- 1 / (z_root - 1)
+    lambda <- mu / gamma(z_root)
+    
+    list(k = k, lambda = lambda)
   }
-  
-  # initial values for z_right (z_left is kept at 1 as f(1) is always 1)
-  z_right = 2
-  while (f(z_right) > 0) z_right <- z_right * 2
-  
-  # find root of f(z) = 0
-  z_root <- uniroot(f, c(1, z_right))$root
-  k = 1 / (z_root - 1)
-  lambda = mu / gamma(z_root)
+  k <- lambda <- numeric(length(mu))
+  for(i in 1:length(mu)) {
+    res <- to_k_lambda_weibull_inner(mu[i], sd[i])
+    k[i] <- res$k
+    lambda[i] <- res$lambda
+  }
   
   list(k = k, lambda = lambda)
 }

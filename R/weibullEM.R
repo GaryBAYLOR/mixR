@@ -23,8 +23,9 @@ weibullEM <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
     stop("the length of 'pi', 'mu' and 'sd' should be the same.")
   }	
   
-	k <- to_k_lambda_weibull(mu, sd)$k
-	lambda <- to_k_lambda_weibull(mu, sd)$lambda	
+  k_lambda <- to_k_lambda_weibull(mu, sd)
+	k <- k_lambda$k
+	lambda <- k_lambda$lambda	
 	
 	n <- length(x)
 	ncomp <- length(pi)
