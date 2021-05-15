@@ -206,6 +206,8 @@ test_that("Check if weibullEM2() is called when x is a matrix", {
 })
 
 
+## ==================== TESTING IF MIXFIT() RETURNS EXPECTED MODEL FITTING RESULTS =================
+
 test_that("Check if mixfit() returns expected normal mixture results", {
   # Arrange
   x = c(-0.429400536602601, 0.162010149716281, -3.17054746835854, 0.373705619911683,
@@ -296,6 +298,40 @@ test_that("Check if mixfit() returns expected normal mixture results when x is a
   expect_equal(actual_output$loglik, -3000.959021084, tolerance = 10)
   expect_equal(actual_output$aic, 6011.91804216799, tolerance = 10)
   expect_equal(actual_output$bic, 6036.4568185629, tolerance = 10)
+})
+
+
+test_that("Check if mixfit() returns expected normal mixture results when x is a matrix and ev = TRUE", {
+  # Arrange
+  x = structure(c(-6.34716872668756, -5.8129957820168, -5.27882283734603, 
+                  -4.74464989267527, -4.21047694800451, -3.67630400333374, -3.14213105866298, 
+                  -2.60795811399222, -2.07378516932145, -1.53961222465069, -1.00543927997993, 
+                  -0.471266335309162, 0.0629066093616011, 0.597079554032364, 1.13125249870313, 
+                  1.66542544337389, 2.19959838804465, 2.73377133271542, 3.26794427738618, 
+                  3.80211722205694, 4.33629016672771, 4.87046311139847, 5.40463605606923, 
+                  5.93880900074, 6.47298194541076, 7.00715489008152, 8.60967372409381, 
+                  -5.8129957820168, -5.27882283734603, -4.74464989267527, -4.21047694800451, 
+                  -3.67630400333374, -3.14213105866298, -2.60795811399222, -2.07378516932145, 
+                  -1.53961222465069, -1.00543927997993, -0.471266335309162, 0.0629066093616011, 
+                  0.597079554032364, 1.13125249870313, 1.66542544337389, 2.19959838804465, 
+                  2.73377133271542, 3.26794427738618, 3.80211722205694, 4.33629016672771, 
+                  4.87046311139847, 5.40463605606923, 5.93880900074, 6.47298194541076, 
+                  7.00715489008152, 7.54132783475229, 9.14384666876458, 1, 4, 14, 
+                  22, 72, 82, 83, 83, 53, 30, 32, 31, 35, 50, 64, 68, 65, 59, 36, 
+                  37, 34, 20, 9, 9, 5, 1, 1), 
+                .Dim = c(27L, 3L), 
+                .Dimnames = list(NULL, c("a", "b", "freq")))
+  
+  # Act
+  actual_output = mixfit(x, ncomp = 2, ev = TRUE)
+  
+  # Assert
+  expect_equal(actual_output$pi, c(0.508269167565811, 0.491730832434189), tolerance = 1e-3)
+  expect_equal(actual_output$mu, c(-2.62290318710918, 2.60878266400357), tolerance = 1e-3)
+  expect_equal(actual_output$sd, c(1.47257539302977, 1.47257539302977), tolerance = 1e-3)
+  expect_equal(actual_output$loglik, -3034.76838334493, tolerance = 10)
+  expect_equal(actual_output$aic, 6077.53676668985, tolerance = 10)
+  expect_equal(actual_output$bic, 6097.16778780578, tolerance = 10)
 })
 
 
@@ -536,3 +572,146 @@ test_that("Check if mixfit() returns expected weilbull mixture results when x is
   expect_equal(actual_output$aic, 672.877750550095, tolerance = 1e-1)
   expect_equal(actual_output$bic, 685.903601480035, tolerance = 1e-1)
 })
+
+
+## ==================== TESTING IF MIXFIT() RETURNS EXPECTED RESULTS FOR INCOMPLETE INPUTS =================
+
+
+test_that("Check if error is thrown when none of ncomp, pi, mu, sd is provided", {
+  # Arrange
+  m = mockery::mock(0, cycle = TRUE)
+  mockery::stub(mixfit, 'CheckData', m)
+  
+  # Assert
+  x = c(1, 2, 3)
+  expect_error(mixfit(x), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'gamma'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'lnorm'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'weibull'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  
+  x = matrix(1:6, ncol = 3)
+  expect_error(mixfit(x), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'gamma'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'lnorm'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  expect_error(mixfit(x, family = 'weibull'), "provide 'ncomp' or all of 'pi', 'mu' and 'sd'.")
+  
+  mockery::expect_called(m, 8)
+})
+
+
+test_that("Check if error is throw when pi, mu, and sd are of different lengths", {
+  # Arrange
+  m = mockery::mock(0, cycle = TRUE)
+  mockery::stub(mixfit, 'CheckData', m)
+
+  # Assert
+  # set.seed(3)
+  # x = rnorm(100)
+  x = c(-0.961933415919883, -0.292525722878467, 0.258788216241251, 
+        -1.15213188591513, 0.195782826286375, 0.0301239446016315, 0.0854177316122717, 
+        1.11661021271527, -1.21885741557799, 1.26736872208989, -0.744781596135141, 
+        -1.13121857083574, -0.716358490032977, 0.252652369646215, 0.152045706655596, 
+        -0.30765642967842, -0.953017330908122, -0.64824281144847, 1.22431362428059, 
+        0.19981160798297, -0.578483721859972, -0.942300733477539, -0.203728179661995, 
+        -1.66647484003016, -0.484455109150991, -0.741072660721595, 1.16061577924134, 
+        1.01206712493423, -0.0720784740865598, -1.13678229809932, 0.90062472898267, 
+        0.851770447092221, 0.72771517415448, 0.73650214568861, -0.352129616945692, 
+        0.705515513485513, 1.30035798873208, 0.0382520141442711, -0.979283769996278, 
+        0.793761230872534, 0.786506872009449, -0.3104631309593, 1.6988848455591, 
+        -0.794593708549281, 0.348437716180028, -2.26540107351778, -0.162205279028246, 
+        1.13086499145889, -0.455545976260457, -0.899166315538872, 0.726838901731248, 
+        -0.809440901865235, 0.267085115955233, -1.73726371053359, -1.41142513580887, 
+        -0.453551226778487, -1.03549127536806, 1.36214289325928, 0.917456736975022, 
+        -0.785142161076832, 0.573518173147265, 0.918196207737772, 0.256287272985725, 
+        0.351966555937571, 1.1743373570956, -0.480846375289203, -0.418829722135601, 
+        0.955112803220351, -1.28900661094787, 0.186197433075043, -0.0313255019472277, 
+        0.46709730984657, 1.02419767420456, 0.267358452234395, 0.2318261028602, 
+        0.747592464522409, 1.21706851052422, 0.383358345168268, -0.988052821592123, 
+        -0.156852910196835, 1.73553521624809, -0.352298305500082, 0.68864004412573, 
+        1.22440609580274, 0.794296303303488, -0.00640239842172925, 0.219150635166991, 
+        -0.886463751005381, 0.439760291371926, -0.886389750665543, -0.853818454354972, 
+        -0.989994330748501, -0.650877736923895, 1.05394666049401, -0.39087803343083, 
+        -0.0705863936100801, -0.462050809497045, 0.540908266990262, 0.931634970926501, 
+        -0.209274345208391)
+  
+  expect_error(mixfit(x, pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'gamma', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'gamma', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'gamma', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'lnorm', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'lnorm', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'lnorm', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'weibull', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'weibull', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'weibull', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  # Assert
+  # set.seed(3)
+  # x = rnorm(100)
+  # x = bin(x, seq(min(x), max(x), length = 30))
+  x = structure(c(-2.26540107351778, -1.85151111250752, -1.71354779217076, 
+                  -1.43762115149726, -1.2996578311605, -1.16169451082375, -1.02373119048699, 
+                  -0.88576787015024, -0.747804549813486, -0.609841229476732, -0.471877909139978, 
+                  -0.333914588803224, -0.19595126846647, -0.0579879481297159, 0.0799753722070382, 
+                  0.217938692543792, 0.355902012880546, 0.4938653332173, 0.631828653554054, 
+                  0.769791973890809, 0.907755294227563, 1.04571861456432, 1.18368193490107, 
+                  1.32164525523782, 1.59757189591133, -2.12743775318103, -1.71354779217076, 
+                  -1.57558447183401, -1.2996578311605, -1.16169451082375, -1.02373119048699, 
+                  -0.88576787015024, -0.747804549813486, -0.609841229476732, -0.471877909139978, 
+                  -0.333914588803224, -0.19595126846647, -0.0579879481297159, 0.0799753722070382, 
+                  0.217938692543792, 0.355902012880546, 0.4938653332173, 0.631828653554054, 
+                  0.769791973890809, 0.907755294227563, 1.04571861456432, 1.18368193490107, 
+                  1.32164525523782, 1.45960857557458, 1.73553521624809, 1, 1, 1, 
+                  1, 2, 4, 9, 4, 5, 3, 7, 5, 4, 4, 5, 9, 3, 2, 6, 5, 6, 5, 5, 1, 
+                  2), 
+                .Dim = c(25L, 3L), 
+                .Dimnames = list(NULL, c("a", "b", "freq")))
+  
+  expect_error(mixfit(x, pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'gamma', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'gamma', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'gamma', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'lnorm', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'lnorm', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'lnorm', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  
+  expect_error(mixfit(x, family = 'weibull', pi = c(0.3, 0.7), mu = c(1, 2, 3)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'weibull', pi = c(0.3, 0.7), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+  expect_error(mixfit(x, family = 'weibull', mu = c(2, 4), sd = c(1, 1, 2)), 
+               "the length of 'pi', 'mu' and 'sd' should be the same.")
+})
+
+
+
