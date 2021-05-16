@@ -9,6 +9,7 @@ Maintainer: Youjiao Yu <jiaoisjiao@gmail.com>
 Description: Performs maximum likelihood estimation for finite mixture models for families including Normal, Weibull, Gamma and Lognormal by using EM algorithm, together with Newton-Raphson algorithm or bisection method when necessary. It also conducts mixture model selection by using information criteria or bootstrap likelihood ratio test. The data used for mixture model fitting can be raw data or binned data. The model fitting process is accelerated by using R package 'Rcpp'.
 License: GPL (>= 2)
 LazyData: TRUE
+Depends: R(>= 3.5.0)
 Imports: ggplot2 (>= 3.3.3), graphics, Rcpp (>= 1.0.6), stats
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
@@ -17,5 +18,8 @@ Author: Youjiao Yu [aut, cre]
 Repository: CRAN
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    testthat (>= 3.0.0),
+    mockery
 VignetteBuilder: knitr
+Config/testthat/edition: 3

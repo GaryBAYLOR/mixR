@@ -111,17 +111,19 @@ mixfit <- function(x, ncomp = NULL, family = c("normal", "weibull", "gamma", "ln
 
 	fun.name <- ifelse(!is.matrix(x), paste0(family, "EM"), paste0(family, "EM2"))
 	mc[[1]] <- as.name(fun.name)
-	res = eval(mc, environment())
+	# res = eval(mc, environment())
 	
 	retry <- 0
 	
 	repeat {
-	  res <- eval(mc, environment())
-	  if(!(is.nan(res$bic) & is.na(res$bic))) break
 	  if(retry >= 5) {
 	    message('EM algorithm failed to converge')
-	    break
+	    return(NULL)
 	  }
+	  
+	  res <- eval(mc, environment())
+	  if(!(is.nan(res$bic) | is.na(res$bic))) break
+	  
 	  retry <- retry + 1
 	  message('EM algorithm is not converging, retrying...')
 	}
