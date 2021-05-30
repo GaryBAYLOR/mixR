@@ -1,2 +1,4 @@
 *.html
 *.R
+figs/
+_cache/
