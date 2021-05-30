@@ -1,9 +1,12 @@
 
 ## 0.2.0
 
-- Updated the plot and density function
+- Updated the function plot.mixfitEM()
+- Updated the function density.mixfitEM()
+- Corrected the function to_k_lambda_weibull()
 - Solved the NA issue in the output of mixfit() (NaN still happens when EM algorithm fails to converge)
 - Added a vignette
+- Added tests
 
 ## 0.1.1
 
