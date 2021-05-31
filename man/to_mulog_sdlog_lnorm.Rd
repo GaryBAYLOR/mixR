@@ -23,7 +23,7 @@ the logarithm mean and logarithm standard deviation
 \details{
 The purpose of this function is to convert the parameterization of lognormal distribution in the
 form of mean and standard deviation to the form of logarithm mean and logarithm standard deviation.
-It can be used for specifying the initial values for the EM algorithm when the first-hand intial values
+It can be used for specifying the initial values for the EM algorithm when the first-hand initial values
 are in the form of mean and standard deviation from K-means clustering algorithm.
 }
 \examples{
