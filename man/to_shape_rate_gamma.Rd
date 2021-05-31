@@ -23,7 +23,7 @@ The function \code{to_shape_rate_gamma} converts the mean and standard deviation
 \details{
 The purpose of this function is to convert the parameterization of gamma distribution in the form of
 mean and standard deviation to the form of shape and rate. It can be used for specifying the initial
-values for the EM algorithm when the first-hand intial values are in the form of mean and standard
+values for the EM algorithm when the first-hand initial values are in the form of mean and standard
 deviation from K-means clustering algorithm.
 }
 \examples{

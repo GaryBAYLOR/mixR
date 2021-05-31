@@ -33,7 +33,7 @@
 \arguments{
 \item{x}{an object of class \code{mixfitEM}, an output from the function \code{\link{mixfit}}}
 
-\item{theme}{a string the specifies the appearence of the plot, which is from the ggplot2 and could
+\item{theme}{a string the specifies the appearance of the plot, which is from the ggplot2 and could
 be one of'gray', 'bw' (default), 'linedraw', 'light', 'dark', 'minimal', 'classic', or 'void'.}
 
 \item{add_hist}{a logical value specifying whether a histogram of data should be plotted}
