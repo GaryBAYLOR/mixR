@@ -1,7 +1,15 @@
 ---
+#output:
+#  pdf_document:
+#    fig_caption: yes
+#    toc: yes
+#    toc_depth: 3
 output: 
-  stevetemplates::article:
+  rmarkdown::html_document:
+    toc: true
+    number_sections: true
     fig_caption: true
+    fig_retina: null
 vignette: >
   %\VignetteIndexEntry{An Introduction to mixR}
   %\VignetteEngine{knitr::rmarkdown}
@@ -9,31 +17,32 @@ vignette: >
 bibliography: master.bib
 biblio-style: apsr
 title: "An Introduction to mixR"
-#thanks: "Replication files are available on the author's Github account (http://github.com/svmiller). **Current version**: `r format(Sys.time(), '%B %d, %Y')`; **Corresponding author**: svmille@clemson.edu."
-author:
-- name: Youjiao Yu
-  affiliation: Baylor University
+author: 
+  - Youjiao Yu
 abstract: "The package **mixR** performs maximum likelihood estimation (MLE) for finite mixture models for families including Normal, Weibull, Gamma and Lognormal via EM algorithm. It also conducts model selection by using Bayesian Information Criterion (BIC) or bootstrap likelihood ratio test (LRT). The data used for mixture model fitting can be raw data or binned data. The model fitting is accelerated by using R package **Rcpp**."
 keywords: "mixture models, EM algorithm, model selection"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 geometry: margin=1in
 fontfamily: mathpazo
-fontsize: 11pt
+#fontsize: 11pt
 # spacing: double
 endnote: no
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE,
-                      message=FALSE, warning=FALSE,
-                      fig.path='figs/',
-                      fig.width=6, fig.height=4,
-                      cache.path = '_cache/'#,
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>",
+  cache=FALSE,
+  message=FALSE, warning=FALSE,
+  #fig.path='figs/',
+  fig.align="center")#,
+  #cache.path = '_cache/')#,
                       #fig.process = function(x) {
                       #x2 = sub('-\\d+([.][a-z]+)$', '\\1', x)
                       #if (file.rename(x, x2)) x2 else x
                       #}
-                      )
+                      #)
 ```
 
 # Background
@@ -93,17 +102,19 @@ We present the functions in **mixR** package for (a) fitting finite mixture mode
 ## Model fitting
 
 The function `mixfit()` can be used to fit mixture models for four different families -- Normal, Weibull, Gamma, and Log-normal. For Normal distribution, the variances of each component are the same by setting `ev = TRUE`. 
-```{r, cache=TRUE, fig.show="hold", out.width="50%", fig.cap="The fitted normal mixture model with unequal variances (left) and equal variance(right)"}
+```{r, cache=FALSE, fig.show="hold", out.width="50%", fig.cap="FIGURE 1: The fitted normal mixture model with unequal variances (left) and equal variance(right)"}
 # generate data from a Normal mixture model
 library(mixR)
 set.seed(102)
 x1 = rmixnormal(1000, c(0.3, 0.7), c(-2, 3), c(2, 1))
 
 # fit a Normal mixture model (unequal variances)
-mod1 = mixfit(x1, ncomp = 2); mod1
+mod1 = mixfit(x1, ncomp = 2)
+mod1
 
 # fit a Normal mixture model (equal variance)
-mod1_ev = mixfit(x1, ncomp = 2, ev = TRUE); mod1_ev
+mod1_ev = mixfit(x1, ncomp = 2, ev = TRUE)
+mod1_ev
 
 plot(mod1, title = 'Normal Mixture Model (unequal variances)')
 plot(mod1_ev, title = 'Normal Mixture Model (equal variance)')
@@ -113,7 +124,7 @@ The initial values for $\Phi$ are estimated by k-means or hierarchical clusterin
 
 To illustrate the idea that $g$ tends to be over-estimated when using a normal mixture model to fit data with asymmetric or skewed components, we simulate data from a Weibull mixture model with $g = 2$, then fit both Normal and Weibull mixture models to the data. First we fit both models with $g = 2$. Weibull distribution provides better fitting than Normal by either visually checking the plots of the fitted results in Figure 2, or the fact that the log-likelihood of the fitted Weibull mixture model (244) is much higher than that of the fitted Normal mixture model (200). Figure 3 shows that the best value of $g$ for Weibull mixture model is two and for Normal mixture model is four, higher than the actual value of $g$. 
 
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="The fitted Weibull mixture model (left) and Normal mixture model (right) to the same data"}
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 2: The fitted Weibull mixture model (left) and Normal mixture model (right) to the same data"}
 x2 = rmixweibull(1000, c(0.4, 0.6), c(0.6, 1.3), c(0.1, 0.1))
 mod2_weibull = mixfit(x2, family = 'weibull', ncomp = 2)
 mod2_normal = mixfit(x2, ncomp = 2)
@@ -130,16 +141,17 @@ plot(mod2_normal)
 
 The function `select()` is used to fit a series of finite mixture models with values of $g$ specified in `ncomp`, and then select the best $g$ by BIC. For normal mixture models, both equal and unequal variances are considered. Figure 3 shows the value of BIC for normal and Weibull mixture models with different $g$. For Weibull mixture models, BIC increases monotonically as $g$ increases from two to six, therefore the best value of $g$ is two. For normal mixture models, BIC decreases first when $g$ goes from two to four, and then increases when $g$ goes from four to six, which is true for both equal variance and unequal variances. The best model is $g = 4$ with equal variance as its BIC is the lowest. Figure 4 shows the fitted Weibull mixture models and normal mixture model with the best values of $g$.
 
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="The value of BIC for Weibull mixture models (left) and Normal mixture models (right) with different values of $g$."}
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 3: The value of BIC for Weibull mixture models (left) and Normal mixture models (right) with different values of $g$."}
 # Selecting the best g for Weibull mixture model
 s_weibull = select(x2, ncomp = 2:6, family = 'weibull')
+
 # Selecting the best g for Normal mixture model
 s_normal = select(x2, ncomp = 2:6)
 plot(s_weibull)
 plot(s_normal)
 ```
 
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="The fitted Weibull mixture model with $g = 2$ (left) and the Normal mixture model with $g = 4$ and equal variance (right)"}
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 4: The fitted Weibull mixture model with $g = 2$ (left) and the Normal mixture model with $g = 4$ and equal variance (right)"}
 plot(mod2_weibull)
 plot(mixfit(x2, ncomp = 4, ev = TRUE))
 ```
@@ -151,7 +163,7 @@ The function `bs.test()` performs bootstrap LRT and returns the p-value as well 
 
 As another example, the data set `x2` above are generated from a Weibull mixture model with $g = 2$. We discussed previously that if we use Normal distribution to fit the mixture model, the best value of $g$ selected by BIC is four. A bootstrap LRT of $g = 2$ against $g = 4$ returns zero p-value, indicating that if we fit a Normal mixture model to `x2`, $g = 4$ is a much better fit than $g= 2$, though visually the data shows two modes rather than four. Figure 5 shows the histogram of $w_1$ and the location of $w_0$ (red vertical line) for the above two examples.
 
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="(left) The bootstrap LRT of $H_0: g = 2$ against $H_1: g = 3$ for fitting Normal mixture models for data `x1`; (right) The bootstrap LRT of $H_0: g = 2$ against $H_1: g = 4$ for fitting Normal mixture models for data `x2`. In each plot the histogram shows the distribution of $w_1$ and the red line shows the value of $w_0$."}
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 5: (left) The bootstrap LRT of $H_0: g = 2$ against $H_1: g = 3$ for fitting Normal mixture models for data `x1`; (right) The bootstrap LRT of $H_0: g = 2$ against $H_1: g = 4$ for fitting Normal mixture models for data `x2`. In each plot the histogram shows the distribution of $w_1$ and the red line shows the value of $w_0$."}
 b1 = bs.test(x1, ncomp = c(2, 3))
 plot(b1, main = 'Bootstrap LRT for Normal Mixture Models (g = 2 vs g = 3)')
 b1$pvalue
@@ -165,23 +177,26 @@ b2$pvalue
 
 The function `mixfit()` can also fit mixture models with binned data, in the form of a three-column matrix each row of which represents a bin with the left bin value, the right bin value, and the total number of data points that fall in each bin (analogous to the data used to create a histogram). The function `bin()` is used to create binned data from raw data, and the function `reinstate()` can simulate the raw data from binned data. Figure 6 shows the mixture models fitted with data binned from raw data `x1` and `x2`, with 30 bins for each data set.
 
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="(left) The Normal mixture model fitted with binned data; (right) The Weibull mixture model fitted with binned data."}
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 6: (left) The Normal mixture model fitted with binned data; (right) The Weibull mixture model fitted with binned data."}
 x1_binned = bin(x1, seq(min(x1), max(x1), length = 30))
 head(x1_binned, 3)
+
 mod1_binned = mixfit(x1_binned, ncomp = 2)
 plot(mod1_binned, xlab = 'x1_binned', 
      title = 'The Normal Mixture Model Fitted With Binned Data')
 mod1_binned
+
 x2_binned = bin(x2, seq(min(x2), max(x2), length = 30))
-#head(x2_binned, 3)
+head(x2_binned, 3)
+
 mod2_binned = mixfit(x2_binned, ncomp = 2, family = 'weibull')
 plot(mod2_binned, xlab = 'x2_binned', 
      title = 'The Weibull Mixture Model Fitted With Binned Data')
 mod2_binned
 ```
 
-As binning can be considered a way to compress data, binned data can accelerate the fitting of mixture models, especially when the original data set is large. To illustrate, we simulate 100,000 data points from a Normal mixture model with five components, and bin the data with 100 bins. Normal mixture models are fitted on both the simulated raw data and binned data. The results show that model fitting takes 27 seconds on raw data, and less than one second on binned data. Another example shows that fitting a Weibull mixture model with data binned from a data set with one million observations takes just over two seconds.
-```{r, fig.show="hold", out.width="50%", cache=TRUE, eval=TRUE, fig.cap="Normal mixture models fitted to the raw data (left) and binned data (right)"}
+As binning can be considered a way to compress data, binned data can accelerate the fitting of mixture models, especially when the original data set is large. To illustrate, we simulate 100,000 data points from a Normal mixture model with five components, and bin the data with 100 bins. Normal mixture models are fitted on both the simulated raw data and binned data. The results show that model fitting takes 27 seconds on raw data, and less than one second on binned data. Another example shows that fitting a Weibull mixture model with data binned from a data set with one million observations takes just over two seconds \footnote{evaluated on iMac with processor: 3 GHz Quad-Core Intel Core i5, memory: 8 GB 2400 MHz DDR4}.
+```{r, fig.show="hold", out.width="50%", cache=FALSE, eval=TRUE, fig.cap="FIGURE 7: Normal mixture models fitted to the raw data (left) and binned data (right)"}
 # a function to generate parameters for a mixture model
 generate_params = function(ncomp = 2) {
   pi = runif(ncomp)
@@ -204,30 +219,26 @@ t1 = Sys.time()
 mod_large <- mixfit(x_large, ncomp = ncomp)
 t2 = Sys.time()
 t2 - t1
+
 plot(mod_large, title = 'Normal Mixture Model Fitted With Raw Data')
 mod_large
+
 # fitting a Normal mixture model with binned data
 t3 = Sys.time()
 x_binned = bin(x_large, seq(min(x_large), max(x_large), length = 100))
 mod_binned <- mixfit(x_binned, ncomp = ncomp)
 t4 = Sys.time()
 t4 - t3
+
 plot(mod_binned, title = 'Normal Mixture Model Fitted With Binned Data')
 mod_binned
 ```
 
-
-
-# Acknowledgement
-This template of this vignette was provided by @steven2021.
-
 # Citation
 Run `citation(package = 'mixR')` to see how to cite package **mixR** in publications.
 
-```{r, fig.height=2, eval=TRUE, echo=FALSE}
-plot.new()
-```
 
+\newpage
 # References
 \setlength{\parindent}{-0.2in}
 \setlength{\leftskip}{0.2in}

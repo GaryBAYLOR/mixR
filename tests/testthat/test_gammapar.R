@@ -1,4 +1,7 @@
 test_that("Checking parameter conversion for gamma", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # from alpha, lambda to mu and sd
   expect_equal(to_mu_sd_gamma(0.5, 1), list(mu = 0.5, sd = 0.707106781186548))
   expect_equal(to_mu_sd_gamma(0.5, 2), list(mu = 0.25, sd = 0.353553390593274))

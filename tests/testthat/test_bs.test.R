@@ -1,4 +1,7 @@
 test_that("Check output and internal function calls when x is a vector", {
+    skip_on_cran()
+    skip_on_bioc()
+    
     # Arrange
     m = mockery::mock(0, cycle = TRUE)
     m2 = mockery::mock(list(pi = 0, mu = 0, sd = 0, iter = 0, loglik = 0, 
@@ -26,6 +29,9 @@ test_that("Check output and internal function calls when x is a vector", {
 })           
 
 test_that("Check output and internal function calls when x is a matrix", {
+    skip_on_cran()
+    skip_on_bioc()
+    
     # Arrange
     m = mockery::mock(0, cycle = TRUE)
     m2 = mockery::mock(list(pi = 0, mu = 0, sd = 0, iter = 0, loglik = 0, 
