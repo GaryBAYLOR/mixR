@@ -1,4 +1,6 @@
 test_that("Checking parameter conversion for log-normal", {
+  skip_on_cran()
+  skip_on_bioc()
   
   # from mu, sd to mulog and sdlog
   expect_equal(to_mulog_sdlog_lnorm(1, 1), list(mulog = -0.346573590279973, sdlog = 0.832554611157698), tolerance = 1e-3)

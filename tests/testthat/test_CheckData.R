@@ -1,4 +1,7 @@
 test_that("Check if output is expected for different inputs", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   expect_error(CheckData(c('1', '2', '3'), 'normal'), "a numeric vector or matrix is required.")
   expect_error(CheckData(data.frame(x = 1:2, y = c('a', 'b')), 'normal'), "a numeric vector or matrix is required.")
   expect_error(CheckData(TRUE, 'normal'), "a numeric vector or matrix is required.")

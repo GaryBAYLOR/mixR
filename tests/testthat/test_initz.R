@@ -1,4 +1,7 @@
 test_that("Check initialization methods", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(10)
   # x = rmixnormal(100, c(0.4, 0.6), c(-3, 2), c(2, 1))

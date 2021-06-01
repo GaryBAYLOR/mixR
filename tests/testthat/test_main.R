@@ -1,4 +1,7 @@
 test_that("Check if normalEM() is called when x is a vector", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -21,6 +24,9 @@ test_that("Check if normalEM() is called when x is a vector", {
 })
 
 test_that("Check if normalEM2() is called when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -44,6 +50,9 @@ test_that("Check if normalEM2() is called when x is a matrix", {
 
 
 test_that("Check if mixfit() returns NULL when aic is NA or NaN", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0, cycle = TRUE)
   m1 = mockery::mock(list(aic = 0, bic = NA), cycle = TRUE)
@@ -69,6 +78,9 @@ test_that("Check if mixfit() returns NULL when aic is NA or NaN", {
 
 
 test_that("Check if gammaEM() is called when x is a vector", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -92,6 +104,9 @@ test_that("Check if gammaEM() is called when x is a vector", {
 
 
 test_that("Check if gammaEM2() is called when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -115,6 +130,9 @@ test_that("Check if gammaEM2() is called when x is a matrix", {
 
 
 test_that("Check if lnormEM() is called when x is a vector", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -138,6 +156,9 @@ test_that("Check if lnormEM() is called when x is a vector", {
 
 
 test_that("Check if lnormEM2() is called when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -161,6 +182,9 @@ test_that("Check if lnormEM2() is called when x is a matrix", {
 
 
 test_that("Check if weibullEM() is called when x is a vector", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -184,6 +208,9 @@ test_that("Check if weibullEM() is called when x is a vector", {
 
 
 test_that("Check if weibullEM2() is called when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0)
   m1 = mockery::mock(list(aic = 0, bic = 0))
@@ -209,6 +236,9 @@ test_that("Check if weibullEM2() is called when x is a matrix", {
 ## ==================== TESTING IF MIXFIT() RETURNS EXPECTED MODEL FITTING RESULTS =================
 
 test_that("Check if mixfit() returns expected normal mixture results", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = c(-0.429400536602601, 0.162010149716281, -3.17054746835854, 0.373705619911683,
         -0.80429729241256, 0.923022033500558, -1.81296118115276, 1.48477630658963,
@@ -241,6 +271,9 @@ test_that("Check if mixfit() returns expected normal mixture results", {
 
 
 test_that("Check if mixfit() returns equal variance for normal mixture when ev = TRUE", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = c(-0.429400536602601, 0.162010149716281, -3.17054746835854, 0.373705619911683,
         -0.80429729241256, 0.923022033500558, -1.81296118115276, 1.48477630658963,
@@ -268,6 +301,9 @@ test_that("Check if mixfit() returns equal variance for normal mixture when ev =
 
 
 test_that("Check if mixfit() returns expected normal mixture results when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(c(-6.34716872668756, -5.8129957820168, -5.27882283734603, 
                   -4.74464989267527, -4.21047694800451, -3.67630400333374, -3.14213105866298, 
@@ -302,6 +338,9 @@ test_that("Check if mixfit() returns expected normal mixture results when x is a
 
 
 test_that("Check if mixfit() returns expected normal mixture results when x is a matrix and ev = TRUE", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(c(-6.34716872668756, -5.8129957820168, -5.27882283734603, 
                   -4.74464989267527, -4.21047694800451, -3.67630400333374, -3.14213105866298, 
@@ -336,6 +375,9 @@ test_that("Check if mixfit() returns expected normal mixture results when x is a
 
 
 test_that("Check if mixfit() returns expected gamma mixture results", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixgamma(100, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -379,6 +421,9 @@ test_that("Check if mixfit() returns expected gamma mixture results", {
 
 
 test_that("Check if mixfit() returns expected gamma mixture results when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixgamma(300, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -415,6 +460,9 @@ test_that("Check if mixfit() returns expected gamma mixture results when x is a 
 
 
 test_that("Check if mixfit() returns expected log-normal mixture results", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixlnorm(100, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -458,6 +506,9 @@ test_that("Check if mixfit() returns expected log-normal mixture results", {
 
 
 test_that("Check if mixfit() returns expected log-normal mixture results when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixlnorm(300, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -495,6 +546,9 @@ test_that("Check if mixfit() returns expected log-normal mixture results when x 
 
 
 test_that("Check if mixfit() returns expected weilbull mixture results", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixweibull(100, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -538,6 +592,9 @@ test_that("Check if mixfit() returns expected weilbull mixture results", {
 
 
 test_that("Check if mixfit() returns expected weilbull mixture results when x is a matrix", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   # set.seed(4)
   # x = rmixweibull(100, c(0.3, 0.7), c(1.5, 4), c(1, 1))
@@ -578,6 +635,9 @@ test_that("Check if mixfit() returns expected weilbull mixture results when x is
 
 
 test_that("Check if error is thrown when none of ncomp, pi, mu, sd is provided", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0, cycle = TRUE)
   mockery::stub(mixfit, 'CheckData', m)
@@ -600,6 +660,9 @@ test_that("Check if error is thrown when none of ncomp, pi, mu, sd is provided",
 
 
 test_that("Check if error is throw when pi, mu, and sd are of different lengths", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   m = mockery::mock(0, cycle = TRUE)
   mockery::stub(mixfit, 'CheckData', m)

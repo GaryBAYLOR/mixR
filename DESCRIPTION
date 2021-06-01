@@ -20,7 +20,6 @@ Suggests:
     rmarkdown,
     knitr,
     testthat (>= 3.0.0),
-    mockery,
-    stevetemplates
+    mockery
 VignetteBuilder: knitr
 Config/testthat/edition: 3

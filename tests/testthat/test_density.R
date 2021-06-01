@@ -1,6 +1,9 @@
 ## ========================================= NORMAL ==========================================
 
 test_that("Check normal density at one location", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5, 0.5), mu = c(0, 2), sd = c(1, 1), iter = 0, loglik = 0, 
                         aic = 0, bic = 0, data = 0, comp.prob = 0, family = "normal"),
@@ -21,6 +24,9 @@ test_that("Check normal density at one location", {
 
 
 test_that("Check normal densities at multiple locations", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5, 0.5), mu = c(0, 2), sd = c(1, 1), iter = 0, loglik = 0, 
                      aic = 0, bic = 0, data = 0, comp.prob = 0, family = "normal"),
@@ -44,6 +50,9 @@ test_that("Check normal densities at multiple locations", {
 
 
 test_that("Check normal densities when at is missing", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5, 0.5), mu = c(0, 2), sd = c(1, 1), iter = 0, loglik = 0, 
                      aic = 0, bic = 0, data = 0, comp.prob = 0, family = "normal"),
@@ -70,6 +79,9 @@ test_that("Check normal densities when at is missing", {
 ## ========================================= GAMMA ==========================================
 
 test_that("Check Gamma density at one location", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.964748246177737, 0.0352517538222629), 
                      mu = c(1.51347806919324, 5.20375520327911), 
@@ -91,6 +103,9 @@ test_that("Check Gamma density at one location", {
 
 
 test_that("Check Gamma densities at multiple locations", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.964748246177737, 0.0352517538222629), 
                      mu = c(1.51347806919324, 5.20375520327911), 
@@ -117,6 +132,9 @@ test_that("Check Gamma densities at multiple locations", {
 
 
 test_that("Check Gamma densities when at is missing", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.964748246177737, 0.0352517538222629), 
                      mu = c(1.51347806919324, 5.20375520327911), 
@@ -144,6 +162,9 @@ test_that("Check Gamma densities when at is missing", {
 ## ======================================= LOG-NORMAL ==========================================
 
 test_that("Check Log-normal density at one location", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5688314414468, 0.4311685585532), 
                      mu = c(0.421211689536832, 2.03710424516956), 
@@ -165,6 +186,9 @@ test_that("Check Log-normal density at one location", {
 
 
 test_that("Check Log-normal density at multiple locations", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5688314414468, 0.4311685585532), 
                      mu = c(0.421211689536832, 2.03710424516956), 
@@ -191,6 +215,9 @@ test_that("Check Log-normal density at multiple locations", {
 
 
 test_that("Check Log-normal densities when at is missing", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.5688314414468, 0.4311685585532), 
                      mu = c(0.421211689536832, 2.03710424516956), 
@@ -218,6 +245,9 @@ test_that("Check Log-normal densities when at is missing", {
 ## ======================================= LOG-NORMAL ==========================================
 
 test_that("Check Weibull density at one location", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.383872774565691, 0.616127225434309), 
                      mu = c(1.0096215101336, 3.96223702267092), 
@@ -238,6 +268,9 @@ test_that("Check Weibull density at one location", {
 
 
 test_that("Check Weibull densities at multiple locations", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.383872774565691, 0.616127225434309), 
                      mu = c(1.0096215101336, 3.96223702267092), 
@@ -263,6 +296,9 @@ test_that("Check Weibull densities at multiple locations", {
 
 
 test_that("Check Weibull densities when at is missing", {
+  skip_on_cran()
+  skip_on_bioc()
+  
   # Arrange
   x = structure(list(pi = c(0.383872774565691, 0.616127225434309), 
                      mu = c(1.0096215101336, 3.96223702267092), 

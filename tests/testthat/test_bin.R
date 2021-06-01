@@ -1,4 +1,8 @@
 test_that("Check output properties", {
+  
+  skip_on_cran()
+  skip_on_bioc()
+  
   x = rnorm(20)
   res = bin(x, seq(min(x), max(x), length = 5))
   
