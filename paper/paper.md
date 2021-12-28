@@ -63,7 +63,7 @@ p4 <- plot(mod4, title = 'Normal Mixture (3 components)')
 grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
-![text \label{fig:plot1}](figures/plot1.pdf)
+![text \label{fig:plot1}](plot1.png)
 
 
 ## Modeling selection
@@ -84,7 +84,7 @@ plot(b2, main = "Bootstrap LRT for Weibull Mixture Models\n (g = 2 vs g = 3)",
      xlab = 'Bootstrap Test Statistics')
 ```
 
-![text \label{fig:plot2}](figures/plot2.pdf)
+![text \label{fig:plot2}](plot2.png)
 
 
 # Summary
