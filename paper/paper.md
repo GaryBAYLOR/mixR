@@ -63,13 +63,31 @@ p4 <- plot(mod4, title = 'Normal Mixture (3 components)')
 grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
+![text \label{fig:plot1}](figures/plot1.pdf)
+
+
 ## Modeling selection
 
 ```{r}
+par(mfrow = c(2, 2))
+mod_selection_gaussian = select(x, ncomp = 2:4)
+mod_selection_weibull = select(x, ncomp = 2:4, family = 'weibull')
 
+b1 = bs.test(x, ncomp = c(2, 3))
+b2 = bs.test(x, ncomp = c(2, 3), family = 'weibull')
 
+plot(mod_selection_gaussian)
+plot(mod_selection_weibull, main="Weibull Mixture Model Selection by BIC")
+plot(b1, main = "Bootstrap LRT for Gaussian Mixture Models\n (g = 2 vs g = 3)",
+     xlab = 'Bootstrap Test Statistics')
+plot(b2, main = "Bootstrap LRT for Weibull Mixture Models\n (g = 2 vs g = 3)",
+     xlab = 'Bootstrap Test Statistics')
 ```
 
+![text \label{fig:plot2}](figures/plot2.pdf)
+
+
 # Summary
+
 
 # References
