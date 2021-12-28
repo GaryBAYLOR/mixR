@@ -21,9 +21,9 @@ R programming language [@R] provides a rich collection of packages for building 
 
 -   `mixfit()` performs maximum likelihood estimation (MLE) for finite mixture models for Gaussian, Weibull, Gamma and Log-normal distribution via EM algorithm [@dempster1977]. The model fitting is accelerated via package `Rcpp` [@rcpp].
 
--   `select()` selects the best model from a series of mixture models with different number of components using Bayesian Information Criterion (BIC). As studied in @steele2010, BIC achieves the best performance in mixture model selection compared to other information criteria.
+-   `select()` selects the best model from a series of mixture models with different number of components using Bayesian Information Criterion (BIC). @steele2010 show that BIC achieves the best performance in mixture model selection compared to other information criteria.
 
--   `bs.test()` performs the likelihood ratio test by parametric bootstrapping [@efron1994] for two mixture models from the same distribution family but with different number of components.
+-   `bs.test()` performs the likelihood ratio test (LRT) by parametric bootstrapping [@efron1994] for two mixture models from the same distribution family but with different number of components.
 
 `mixR` also contains the following additional features.
 
@@ -33,49 +33,57 @@ R programming language [@R] provides a rich collection of packages for building 
 
 # Examples
 
-We demonstrate how to use `mixR` for mixture model fitting and model selection.
+We demonstrate how to use `mixR` for fitting finite mixture models and model selection using BIC and bootstrap LRT.
 
 ## Model fitting
 
+We fit the following four mixture models to a data set with 1000 random data points generated from a Weibull mixture model with two components.
+
+-   Gaussian mixture with two components (`mod1`)
+-   Gaussian mixture with two components to the data binned from the raw data (`mod2`)
+-   Gaussian mixture with three components (`mod3`)
+-   Weibull mixture with two components (`mod4`)
+
+\ref{fig:plot1} shows the above four mixture models, from which we see that binning does not cause much information loss and we can get similar fitted results from raw data and binned data. This is usually the case when we have at least moderate data size and the underlying mixture model is not too complex (e.g., too many components). A benefit of binning is it reduces the computation significantly for large data, especially when conducting bootstrap LRT which is computation intensive. Another thing we observe from \ref{fig;plot1} is Gaussian mixture model can provide a good fit for non-Gaussian data but the number of mixture components tends to be overestimated when the actual distribution is skewed.
+
 ```{r}
 library(mixR)
-library(gridExtra)
+
 set.seed(101)
 x <- rmixweibull(1000, c(0.4, 0.6), c(0.6, 1.3), c(0.1, 0.1))
-
-# fit a Normal mixture model with 2 components
-mod1 <- mixfit(x, ncomp = 2)
-p1 <- plot(mod1, title = 'Normal Mixture (2 components)')
-
-# fit a Weibull mixture model with 2 components
-mod2 <- mixfit(x, ncomp = 2, family = 'weibull')
-p2 <- plot(mod2, title = 'Weibull Mixture (2 components)')
-
-# fit a Normal mixture model after binning the raw data
 x_binned <- bin(x, brks = seq(min(x), max(x), length = 30))
-mod3 <- mixfit(x_binned, ncomp = 2)
-p3 <- plot(mod3, title = 'Normal Mixture (binned data 3 components)')
 
-# fitting a Normal mixture model with 3 components
-mod4 <- mixfit(x, ncomp = 3)
-p4 <- plot(mod4, title = 'Normal Mixture (3 components)')
+mod1 <- mixfit(x, ncomp = 2)
+mod2 <- mixfit(x_binned, ncomp = 2)
+mod3 <- mixfit(x, ncomp = 3)
+mod4 <- mixfit(x, ncomp = 2, family = 'weibull')
 
-grid.arrange(p1, p2, p3, p4, nrow = 2)
+p1 <- plot(mod1, title = 'Gaussian Mixture (2 components)')
+p2 <- plot(mod2, title = 'Gaussian Mixture (binned data 2 components)')
+p3 <- plot(mod3, title = 'Gaussian Mixture (3 components)')
+p4 <- plot(mod4, title = 'Weibull Mixture (2 components)')
+gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
-![text \label{fig:plot1}](plot1.png)
+![(top left) The fitted Gaussian mixture with two components; (top right) The fitted Gaussian mixture with two components to the data binned from the raw data; (bottom left) The fitted Gaussian mixture with three components; (bottom right) The fitted Weibull mixture with two components. \label{fig:plot1}](plot1.png)
 
+## Model selection
 
-## Modeling selection
+\ref{fig:plot2} shows that by using BIC, the best Gaussian mixture model has three components and unequal variances for each component while the best Weibull mixture model has two components. The bootstrap LRT with $H_0: g=2$ against $H_a: g=3$ for Gaussian mixture models (using the default 100 bootstrap iterations) returns a p-value of zero, showing that Gaussian mixture with three components is significantly better than that with two components. Similarly the same test for Weibull mixture models returns a p-value of 0.82 which is insignificant and indicates Weibull mixture with three components is no better than that with two components.
 
 ```{r}
-par(mfrow = c(2, 2))
 mod_selection_gaussian = select(x, ncomp = 2:4)
 mod_selection_weibull = select(x, ncomp = 2:4, family = 'weibull')
+b1 <- bs.test(x, ncomp = c(2, 3))
+b2 <- bs.test(x, ncomp = c(2, 3), family = 'weibull')
 
-b1 = bs.test(x, ncomp = c(2, 3))
-b2 = bs.test(x, ncomp = c(2, 3), family = 'weibull')
+b1$pvalue
+## [1] 0
 
+b2$pvalue
+## [1] 0.82
+
+par(mfrow = c(2, 2))
 plot(mod_selection_gaussian)
 plot(mod_selection_weibull, main="Weibull Mixture Model Selection by BIC")
 plot(b1, main = "Bootstrap LRT for Gaussian Mixture Models\n (g = 2 vs g = 3)",
@@ -84,10 +92,10 @@ plot(b2, main = "Bootstrap LRT for Weibull Mixture Models\n (g = 2 vs g = 3)",
      xlab = 'Bootstrap Test Statistics')
 ```
 
-![text \label{fig:plot2}](plot2.png)
-
+![(top left) Gaussian mixture model selection using BIC. UV stands for unequal variances for each mixture components and EV stands for equal variance; (top right) Weibull mixture model selection using BIC; (bottom left) Bootstrap LRT with $H_0: g=2$ against $H_a: g=3$ for Gaussian mixture models; (bottom right) Bootstrap LRT with $H_0: g=2$ against $H_a: g=3$ for Weibull mixture models \label{fig:plot2}](plot2.png)
 
 # Summary
 
+`mixR` unifies the interface for fitting and comparing finite mixture models for both raw data and binned data for families including Gaussian, Weibull, Gamma and Log-normal. The package also provide features for generating random numbers from mixture models, conversion of parameters for Weibull and Gamma models, and model visualization in `ggplot2`. The model fitting process is accelerated by `Rcpp`.
 
 # References
