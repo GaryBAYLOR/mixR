@@ -105,10 +105,10 @@ b4$pvalue
 par(mfrow = c(2, 2))
 plot(b1)
 plot(b2, main = "Weibull Mixture Model Selection by BIC")
-plot(b3, main = "Bootstrap LRT for Gaussian Mixture Models\n (g = 2 vs. g = 3)",
-     xlab = 'Bootstrap Test Statistics')
-plot(b4, main = "Bootstrap LRT for Weibull Mixture Models\n (g = 2 vs. g = 3)",
-     xlab = 'Bootstrap Test Statistics')
+plot(b3, main = "Bootstrap LRT for Gaussian Mixture Models\n 
+     (g = 2 vs. g = 3)", xlab = 'Bootstrap Test Statistics')
+plot(b4, main = "Bootstrap LRT for Weibull Mixture Models\n
+     (g = 2 vs. g = 3)", xlab = 'Bootstrap Test Statistics')
 ```
 
 ![(top left) Gaussian mixture model selection using BIC (UV stands for unequal variances for each mixture components and EV stands for equal variance); (top right) Weibull mixture model selection using BIC; (bottom left) bLRT with $H_0: g=2$ versus $H_a: g=3$ for Gaussian mixture models; (bottom right) bLRT with $H_0: g=2$ versus $H_a: g=3$ for Weibull mixture models \label{fig:plot2}](plot2.png)
