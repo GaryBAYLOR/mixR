@@ -10,3 +10,4 @@ src/*.dll
 inst/doc
 /doc/
 /Meta/
+.Rhistory

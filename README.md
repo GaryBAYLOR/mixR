@@ -1,8 +1,13 @@
-R package for fitting finite mixture models for both raw and binned data
-========================================================================
+<!-- badges: start -->
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mixR)](https://CRAN.R-project.org/package=mixR)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/mixR)](https://cran.rstudio.com/web/packages/mixR/index.html)
+[![CRAN Monthly Downloads](https://cranlogs.r-pkg.org/badges/mixR)](https://cran.r-project.org/package=mixR)
 
-Installation
-------------
+<!-- badges: end -->
+
+# mixR: An R package for finite mixture modeling for both raw and binned data
+
+## Installation
 
 For stable/pre-compiled(for Windows and OS X) version, please install from [CRAN](https://CRAN.R-project.org/package=mixR):
 
@@ -10,8 +15,7 @@ For stable/pre-compiled(for Windows and OS X) version, please install from [CRAN
 install.packages('mixR')
 ```
 
-Examples
---------
+## Examples
 
 * Fitting a normal mixture model
 ```{r}
