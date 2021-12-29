@@ -45,7 +45,7 @@ We fit the following four mixture models to a data set that consists of 1000 ran
 -   Gaussian mixture with three components (`mod3`)
 -   Weibull mixture with two components (`mod4`)
 
-The fitted coefficients in `mod1` and `mod2` and the top two plots in Figure \ref{fig:plot1} shows that binning does not cause much information loss and we get similar fitted results using either raw data or binned data. This is usually the case when we have at least moderate data size and the underlying mixture model is not too complex (e.g., too many components). A benefit of binning is it reduces the computation burden significantly for large data, especially when conducting bLRT which is computationally intensive. From Figure \ref{fig:plot1} we also observe that Gaussian mixture models can provide a good fit for non-Gaussian data but the number of mixture components tends to be overestimated because more Gaussian components are needed to model the asymmetry and long tails that usually exist in non-Gaussian data.
+The fitted coefficients in `mod1` and `mod2` and the top two plots in Figure \ref{fig:plot1} show that binning does not cause much information loss and we get similar fitted results using either raw data or binned data. This is usually the case when we have at least moderate data size and the underlying mixture model is not too complex (e.g., too many mixture components). A benefit of binning is it reduces the computation burden significantly for large data, especially when conducting bLRT which is computationally intensive. From Figure \ref{fig:plot1} we also observe that Gaussian mixture models can provide a good fit for non-Gaussian data but the number of mixture components tends to be overestimated because more Gaussian components are needed to model the asymmetry and long tails that usually exist in non-Gaussian data.
 
 ```{r}
 library(mixR)
@@ -84,7 +84,7 @@ p4 <- plot(mod4, title = 'Weibull Mixture (2 components)')
 gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
-![(top left) the fitted Gaussian mixture with two components; (top right) the fitted Gaussian mixture with two components to the binned data; (bottom left) the fitted Gaussian mixture with three components; (bottom right) the fitted Weibull mixture with two components. \label{fig:plot1}](plot1.png)
+![(top left) the fitted Gaussian mixture with two components; (top right) the fitted Gaussian mixture with two components to the binned data; (bottom left) the fitted Gaussian mixture with three components; (bottom right) the fitted Weibull mixture with two components \label{fig:plot1}](plot1.png)
 
 ## Model selection
 
@@ -115,7 +115,7 @@ plot(b4, main = "Bootstrap LRT for Weibull Mixture Models\n
 
 # Summary
 
-`mixR` unifies the interface for fitting and comparing finite mixture models for both raw data and binned data for distributions including Gaussian, Weibull, Gamma and Log-normal. The package also provides features for generating random data from mixture models, conversion of parameters for Weibull and Gamma models, and model visualization in `ggplot2`. The computational part of `mixR` is completed in C++ enabled by R package `Rcpp`.
+`mixR` unifies the interface for fitting and comparing finite mixture models for both raw data and binned data for distributions including Gaussian, Weibull, Gamma and Log-normal. The package also provides features for generating random data from mixture models, conversion of parameters for Weibull and Gamma models, and model visualization in `ggplot2`. The heavy computation in `mixR` is completed in C++ by using `Rcpp`.
 
 `mixR` is actively used by researchers and practitioners in a variety of fields [@jung2020; @sylvestre2020; @ogana2020; @de2021; @buckland2021; @buchel2021; @yang2021; @yang2021bio].
 
