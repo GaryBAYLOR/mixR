@@ -18,9 +18,9 @@ bibliography: paper.bib
 
 # Statement of need
 
-R programming language [@R] provides a rich collection of packages for building and analyzing finite mixture models which are widely used in unsupervised learning such as model-based clustering or density estimation. For example, `mclust` [@mclust] can be used to build Gaussian mixture models with different covariance structures, `mixtools` [@mixtools] implements parametric and non-parametric mixture models as well as mixtures of Gaussian regressions, `flexmix` [@flexmix] provides a general framework for finite mixtures of regression models, `mixdist` [@mixdist] fits mixture models for grouped and conditional data (or binned data). To our knowledge, almost all R packages for finite mixture models are designed to use raw data as the modeling input except `mixdist`. However the popular model selection methods based on information criteria or bootstrapping likelihood ratio test (bLRT) [@mclachlan1987; @feng1996; @yu2019] are not implemented in `mixdist`. To bridge this gap and to unify the interface for finite mixture modeling for both raw and binned data, we implement `mixR` package that provides the following primary features.
+R programming language [@R] provides a rich collection of packages for building and analyzing finite mixture models which are widely used in unsupervised learning such as model-based clustering and density estimation. For example, `mclust` [@mclust] can be used to build Gaussian mixture models with different covariance structures, `mixtools` [@mixtools] implements parametric and non-parametric mixture models as well as mixtures of Gaussian regressions, `flexmix` [@flexmix] provides a general framework for finite mixtures of regression models, `mixdist` [@mixdist] fits mixture models for grouped and conditional data (also called binned data). To our knowledge, almost all R packages for finite mixture models are designed to use raw data as the modeling input except `mixdist`. However the popular model selection methods based on information criteria or bootstrapping likelihood ratio test (bLRT) [@mclachlan1987; @feng1996; @yu2019] are not implemented in `mixdist`. To bridge this gap and to unify the interface for finite mixture modeling for both raw and binned data, we implement `mixR` package that provides the following primary features.
 
--   `mixfit()` performs maximum likelihood estimation (MLE) for finite mixture models for Gaussian, Weibull, Gamma and Log-normal distribution via EM algorithm [@dempster1977]. The model fitting is accelerated via package `Rcpp` [@rcpp].
+-   `mixfit()` performs maximum likelihood estimation (MLE) for finite mixture models for Gaussian, Weibull, Gamma and Log-normal distributions via EM algorithm [@dempster1977]. The model fitting is accelerated via package `Rcpp` [@rcpp].
 
 -   `select()` selects the best model from a series of mixture models with different number of mixture components by using Bayesian Information Criterion (BIC). @steele2010 show that BIC achieves the best performance in mixture model selection compared to other information criteria.
 
@@ -34,7 +34,7 @@ R programming language [@R] provides a rich collection of packages for building 
 
 # Examples
 
-We demonstrate how to use `mixR` for fitting finite mixture models and mixture model selection using BIC and bLRT.
+We demonstrate how to use `mixR` for fitting finite mixture models and selecting mixture models using BIC and bLRT.
 
 ## Model fitting
 
@@ -59,6 +59,24 @@ mod2 <- mixfit(x_binned, ncomp = 2)
 mod3 <- mixfit(x, ncomp = 3)
 mod4 <- mixfit(x, ncomp = 2, family = 'weibull')
 
+mod1
+## Normal mixture model with 2 components
+##        comp1     comp2
+## pi 0.4210604 0.5789396
+## mu 0.6014690 1.3084871
+## sd 0.1092375 0.0932826
+## 
+## EM iterations: 5 AIC: -406.65 BIC: -382.11 log-likelihood: 208.32
+
+mod2
+## Normal mixture model with 2 components
+##        comp1     comp2
+## pi 0.4213019 0.5786981
+## mu 0.6018737 1.3091224
+## sd 0.1084973 0.0916267
+## 
+## EM iterations: 9 AIC: 5813.09 BIC: 5837.63 log-likelihood: -2901.54
+
 p1 <- plot(mod1, title = 'Gaussian Mixture (2 components)')
 p2 <- plot(mod2, title = 'Gaussian Mixture (binned data 2 components)')
 p3 <- plot(mod3, title = 'Gaussian Mixture (3 components)')
@@ -66,7 +84,7 @@ p4 <- plot(mod4, title = 'Weibull Mixture (2 components)')
 gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2)
 ```
 
-![(top left) the fitted Gaussian mixture with two components; (top right) the fitted Gaussian mixture with two components to the data binned from the raw data; (bottom left) the fitted Gaussian mixture with three components; (bottom right) the fitted Weibull mixture with two components. \label{fig:plot1}](plot1.png)
+![(top left) the fitted Gaussian mixture with two components; (top right) the fitted Gaussian mixture with two components to the binned data; (bottom left) the fitted Gaussian mixture with three components; (bottom right) the fitted Weibull mixture with two components. \label{fig:plot1}](plot1.png)
 
 ## Model selection
 
