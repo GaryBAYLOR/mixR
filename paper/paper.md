@@ -115,6 +115,8 @@ plot(b4, main = "Bootstrap LRT for Weibull Mixture Models\n (g = 2 vs. g = 3)",
 
 # Summary
 
-`mixR` unifies the interface for fitting and comparing finite mixture models for both raw data and binned data for distributions including Gaussian, Weibull, Gamma and Log-normal. The package also provides features for generating random data from mixture models, conversion of parameters for Weibull and Gamma models, and model visualization in `ggplot2`. The model fitting process is accelerated by `Rcpp`.
+`mixR` unifies the interface for fitting and comparing finite mixture models for both raw data and binned data for distributions including Gaussian, Weibull, Gamma and Log-normal. The package also provides features for generating random data from mixture models, conversion of parameters for Weibull and Gamma models, and model visualization in `ggplot2`. The computational part of `mixR` is completed in C++ enabled by R package `Rcpp`.
+
+'mixR' is actively used by researchers and practitioners in a variety of fields [@jung2020; @sylvestre2020; @ogana2020; @de2021; @buckland2021; @buchel2021; @yang2021; @yang2021bio].
 
 # References
