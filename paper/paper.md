@@ -22,7 +22,7 @@ R programming language [@R] provides a rich collection of packages for building 
 
 -   `mixfit()` performs maximum likelihood estimation (MLE) for finite mixture models for Gaussian, Weibull, Gamma and Log-normal distributions via EM algorithm [@dempster1977]. The model fitting is accelerated via package `Rcpp` [@rcpp].
 
--   `select()` selects the best model from a series of mixture models with different number of mixture components by using Bayesian Information Criterion (BIC). @steele2010 show that BIC achieves the best performance in mixture model selection compared to other information criteria.
+-   `select()` selects the best model from a series of mixture models with different number of mixture components by using Bayesian Information Criterion (BIC).
 
 -   `bs.test()` performs bLRT for two mixture models from the same distribution family but with different number of mixture components.
 
