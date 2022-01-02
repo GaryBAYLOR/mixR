@@ -7,12 +7,30 @@
 
 # mixR: An R package for finite mixture modeling for both raw and binned data
 
+## Why `mixR`?
+R programming language provides a rich collection of packages for building and analyzing finite mixture models which are widely used in unsupervised learning such as model-based clustering and density estimation. For example, 
+- [`mclust`](https://cran.r-project.org/web/packages/mclust/index.html) can be used to build Gaussian mixture models with different covariance structures
+- [`mixtools`](https://cran.r-project.org/web/packages/mixtools/index.html) implements parametric and non-parametric mixture models as well as mixtures of Gaussian regressions
+- [`flexmix`](https://cran.r-project.org/web/packages/flexmix/index.html) provides a general framework for finite mixtures of regression models
+- [`mixdist`](https://cran.r-project.org/web/packages/mixdist/index.html) fits mixture models for grouped and conditional data (also called binned data). 
+
+To our knowledge, almost all R packages for finite mixture models are designed to use raw data as the modeling input except `mixdist`. However the popular model selection methods based on information criteria or bootstrapping likelihood ratio test ([McLachlan, 1987](https://doi.org/10.2307/2347790); [Feng & McCulloch, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02104.x); [Yu & Harvill, 2019](https://doi.org/10.1080/03610926.2018.1494838)) are not implemented in `mixdist`.
+
+`mixR` is a package that aims to bridge this gap and to unify the interface for finite mixture modeling for both raw and binned data.
+
+
 ## Installation
 
 For stable/pre-compiled(for Windows and OS X) version, please install from [CRAN](https://CRAN.R-project.org/package=mixR):
 
 ```r
 install.packages('mixR')
+```
+
+To get the latest development version from Github:
+```r
+# install.packages('devtools')
+devtools::install_github('garybaylor/mixR')
 ```
 
 ## Examples
@@ -69,5 +87,8 @@ b2 = bs.test(x2, ncomp = c(2, 4))
 plot(b2, main = 'Bootstrap LRT for Normal Mixture Models (g = 2 vs g = 4)')
 b2$pvalue
 ```
-
 For more examples please check the vignette [An Introduction to mixR](https://cran.r-project.org/web/packages/mixR/vignettes/intro-to-mixr.pdf).
+
+
+## Contributor Code of Conduct
+Everyone is welcome to contribute to the project through reporting issues, posting feature requests, updating documentation, submitting pull requests, or contact the project maintainer directly. To maintain a friendly atmosphere and to collaborate in a fun and productive way, we expect contributors to abide by the [Contributor Code of Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/).
