@@ -1,4 +1,3 @@
-Statement of need
 ---
 title: 'mixR: An R package for Finite Mixture Modeling for Both Raw and Binned Data'
 tags:
