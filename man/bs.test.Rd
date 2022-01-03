@@ -30,7 +30,7 @@ of \code{normal}, \code{weibull}, \code{gamma}, or \code{lnorm} (default \code{n
 \item{B}{the number of bootstrap iterations (default 100).}
 
 \item{ev}{a logical value indicating whether the variance of each component should be the same
-or not (default \code{FALSE}). \code{ev} is ignored for other family members.}
+or not (default \code{FALSE} for \code{Normal} family and ignored for other family members).}
 
 \item{mstep.method}{the method used in M-step of EM algorithm for \code{weibull} or
 \code{gamma} family. It is ignored for \code{normal} or \code{lnorm} family,

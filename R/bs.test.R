@@ -16,7 +16,7 @@
 #'  of \code{normal}, \code{weibull}, \code{gamma}, or \code{lnorm} (default \code{normal}).
 #' @param B the number of bootstrap iterations (default 100).
 #' @param ev a logical value indicating whether the variance of each component should be the same
-#' or not (default \code{FALSE}). \code{ev} is ignored for other family members.
+#' or not (default \code{FALSE} for \code{Normal} family and ignored for other family members).
 #' @param mstep.method the method used in M-step of EM algorithm for \code{weibull} or
 #' \code{gamma} family. It is ignored for \code{normal} or \code{lnorm} family,
 #' which has closed-form solution in the M-step. The default value is \code{bisection}.
