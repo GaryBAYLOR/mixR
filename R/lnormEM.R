@@ -22,6 +22,8 @@ lnormEM <- function(x, ncomp = NULL, pi = NULL, mu = NULL, sd = NULL, ev,
   if(length(pi) != length(mu) || length(pi) != length(sd) ) {
     stop("the length of 'pi', 'mu' and 'sd' should be the same.")
   }	
+  if(max_iter < 200) stop("'max_iter' is too small! Recommend to leave it as default or set it at least 200 to reduce the risk of EM algorithm not converging.")
+  
   n <- length(x)
   ncomp <- length(pi)
   

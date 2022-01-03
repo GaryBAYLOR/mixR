@@ -22,14 +22,7 @@
 #'
 #' @export
 rmixnormal <- function(n, pi, mu, sd) {
-	if(!(is.numeric(n) || is.numeric(pi) || is.numeric(mu) || is.numeric(sd)))
-	{stop("numeric inputs are required.")}
-	if(length(pi) != length(mu) || (length(pi) != length(sd)))
-	{stop("'pi', 'mu' and 'sd' should have the same length.")}
-	if(any(c(n < 0, pi < 0, sd < 0)))
-	{stop("positive 'n', 'pi' and 'sd' are required.")}
-	if(length(n) > 1) stop("'n' should be a positive integer.")
-
+	check_inputs_for_rmix(n, pi, mu, sd)
 	res <- numeric(0)
 	n0 <- rmultinom(1, n, pi)[, 1]
 	for(i in 1:length(pi)) {
