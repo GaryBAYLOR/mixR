@@ -79,7 +79,23 @@ tol = 1e-6, max_iter = 500) {
 
 	mc1 <- mc
 	mc2 <- mc
-
+  
+	if(!is.vector(ncomp, mode = 'numeric')) {
+	  stop("'ncomp' must be a numeric vector!")
+	} else if (length(ncomp) != 2) {
+	  stop("'ncomp' must be of length two!")
+	}
+	ncomp <- as.integer(ncomp)
+	if (any(is.na(ncomp))) {
+	  stop("'ncomp' must not contain missing value!")
+	} else if (ncomp[1] >= ncomp[2]) {
+	  stop("ncomp[1] must be less than ncomp[2] after coercion to integers!")
+	} else if (ncomp[1] < 1) {
+	  stop("'ncomp' must be positive!")
+	} else if (ncomp[2] > 20) {
+	  stop("'ncomp' larger than 20 is currently not supported!")
+	}
+	
 	mc1$ncomp <- ncomp[1]
 	mc2$ncomp <- ncomp[2]
 
