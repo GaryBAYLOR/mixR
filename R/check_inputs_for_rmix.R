@@ -15,7 +15,7 @@ check_inputs_for_rmix <- function(n, pi, mu, sd) {
   } else if (any(c(n <= 1, pi <= 0, sd <= 0))) {
     stop("'n', 'pi' and 'sd' should all be positive and 'n' should be at least 1!")
   } else if (any(c(n, pi, mu, sd) > 1e7)) {
-    stop("'n', 'pi', 'mu' and 'sd' out of range!")
+    stop("'n', 'pi', 'mu' and 'sd' contains data out of range (1e7)!")
   } else if (any(mu< -1e6)) {
     stop("'mu' is out of range!")
   }
