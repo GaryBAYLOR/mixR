@@ -36,7 +36,7 @@ devtools::install_github('garybaylor/mixR')
 ## Examples
 
 * Fitting a normal mixture model
-```{r}
+```r
 library(mixR)
 
 # generate data from a Normal mixture model
@@ -54,19 +54,31 @@ mod1_ev = mixfit(x1, ncomp = 2, ev = TRUE)
 ```
 
 * Fitting a Weibull mixture model
-```{r}
+```r
 # generate data from a Weibull mixture model
 x2 = rmixweibull(1000, c(0.4, 0.6), c(0.6, 1.3), c(0.1, 0.1))
 mod2_weibull = mixfit(x2, family = 'weibull', ncomp = 2)
 ```
 * Fitting a mixture model with binned data
-```{r}
+```r
+head(Stamp2)
+##     lower  upper freq
+## 1  0.0595 0.0605    1
+## 5  0.0635 0.0645    2
+## 6  0.0645 0.0655    1
+## 7  0.0655 0.0665    1
+## 9  0.0675 0.0685    1
+## 10 0.0685 0.0695    7
+mod_binned = mixfit(Stamp2, ncomp = 7, family = 'weibull')
+plot(mod_binned)
+
+# data binned from numeric data
 x1_binned = bin(x1, seq(min(x1), max(x1), length = 30))
 mod1_binned = mixfit(x1_binned, ncomp = 2)
 ```
 
 * Mixture model selection by BIC
-```{r}
+```r
 # Selecting the best g for Normal mixture model
 s_normal = select(x2, ncomp = 2:6)
 
@@ -78,7 +90,7 @@ plot(s_normal)
 ```
 
 * Mixture model selection by bootstrap likelihood ratio test (LRT)
-```{r}
+```r
 b1 = bs.test(x1, ncomp = c(2, 3))
 plot(b1, main = 'Bootstrap LRT for Normal Mixture Models (g = 2 vs g = 3)')
 b1$pvalue
