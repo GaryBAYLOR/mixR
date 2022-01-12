@@ -2,6 +2,7 @@
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mixR)](https://CRAN.R-project.org/package=mixR)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/mixR)](https://cran.rstudio.com/web/packages/mixR/index.html)
 [![CRAN Monthly Downloads](https://cranlogs.r-pkg.org/badges/mixR)](https://cran.r-project.org/package=mixR)
+[![DOI](https://zenodo.org/badge/360674750.svg)](https://zenodo.org/badge/latestdoi/360674750)
 
 <!-- badges: end -->
 
