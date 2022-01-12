@@ -28,7 +28,7 @@ R [@R] provides a rich collection of packages for building and analyzing finite 
 
 `mixR` also contains the following additional features.
 
--   Visualization of the fitted mixture models using ggplot [@ggplot2].
+-   Visualization of the fitted mixture models using `ggplot2` [@ggplot2].
 -   Functions to generate random data from mixture models.
 -   Functions to convert parameters of Weibull and Gamma mixture models between shape-scale representation used in probability density functions and mean-variance representation which is more intuitive for people to understand the distribution.
 
@@ -45,7 +45,7 @@ We fit the following four mixture models to a data set that consists of 1000 ran
 -   Gaussian mixture with three components (`mod3`)
 -   Weibull mixture with two components (`mod4`)
 
-The fitted coefficients in `mod1` and `mod2` and the top two plots in Figure \ref{fig:plot1} show that binning does not cause much information loss, and we get similar fitted results using either raw data or binned data. This is usually the case when we have at least moderate data size, and the underlying mixture model is not too complex (e.g., too many mixture components). A benefit of binning is it reduces the computation burden significantly for large data, especially when conducting bLRT, which is computationally intensive. From Figure \ref{fig:plot1} we also observe that Gaussian mixture models can provide a good fit for non-Gaussian data though the number of mixture components tends to be overestimated because more Gaussian components are needed to model the asymmetry and long tails that usually exist in non-Gaussian data.
+The fitted coefficients in `mod1` and `mod2` and the top two plots in Figure \ref{fig:plot1} show that binning does not cause much information loss, and we get similar fitted results using either raw data or binned data. This is usually the case when we have at least moderate data size, and the underlying mixture model is not too complex (e.g., too many mixture components). A benefit of binning is that it reduces the computation burden significantly for large data, especially when conducting bLRT, which is computationally intensive. From Figure \ref{fig:plot1} we also observe that Gaussian mixture models can provide a good fit for non-Gaussian data though the number of mixture components tends to be overestimated because more Gaussian components are needed to model the asymmetry and long tails that usually exist in non-Gaussian data.
 
 ```{r}
 library(mixR)
@@ -88,7 +88,7 @@ gridExtra::grid.arrange(p1, p2, p3, p4, nrow = 2)
 
 ## Model selection
 
-Figure \ref{fig:plot2} shows that the best Gaussian mixture model selected by BIC has three components and unequal variances for each component, while the best Weibull mixture model has two components. The bLRT with $H_0: g=2$ versus $H_a: g=3$ for Gaussian mixture models (using the default 100 bootstrap iterations) returns a p-value of zero, showing that Gaussian mixture with three components is significantly better than it with two components. Similarly, the same test for Weibull mixture models returns an insignificant p-value of 0.82, indicating that the Weibull mixture with three components is no better than it with two components.
+Figure \ref{fig:plot2} shows that the best Gaussian mixture model selected by BIC has three components and unequal variances for each component, while the best Weibull mixture model has two components. The bLRT with $H_0: g=2$ versus $H_a: g=3$ for Gaussian mixture models (using the default 100 bootstrap iterations) returns a p-value of zero, showing that Gaussian mixture with three components is significantly better than that with two components. Similarly, the same test for Weibull mixture models returns an insignificant p-value of 0.82, indicating that the Weibull mixture with three components is no better than it with two components.
 
 ```{r}
 b1 <- select(x, ncomp = 2:4)
