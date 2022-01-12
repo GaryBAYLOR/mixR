@@ -22,15 +22,21 @@
 plot.selectEM <- function(x, leg.loc = "topright", ...) {
 	if(x$family == "normal") {
 		len <- length(x$ncomp)
-	    s1 <- seq(1, len, by = 2)
-	    s2 <- seq(2, len, by = 2)
-	    plot(x$ncomp[s1], x$bic[s1], type = "b", ylim = c(min(x$bic), max(x$bic)),
-	    main = "Model selection by BIC", xlab = "Number of components", ylab = "BIC", ...)
-	    lines(x$ncomp[s2], x$bic[s2], type = "b", col = "blue")
-	    legend(leg.loc, lty = c(1, 1), col = c("black", "blue"), legend = c("EV", "UV"), bty = "n")
+	  s1 <- seq(1, len, by = 2)
+	  s2 <- seq(2, len, by = 2)
+	  plot(x$ncomp[s1], x$bic[s1], type = "b", ylim = c(min(x$bic), max(x$bic)),
+	       main = "Gaussian Mixture Model Selection by BIC", xlab = "Number of components", 
+	       ylab = "BIC", xaxt = 'n', ...)
+	  axis(side = 1, at = x$ncomp[s1])
+	  lines(x$ncomp[s2], x$bic[s2], type = "b", col = "blue")
+	  legend(leg.loc, lty = c(1, 1), col = c("black", "blue"), legend = c("EV", "UV"), bty = "n")
 	} else {
+	  family <- x$family
+	  substring(family, 1, 1) <- toupper(substring(family, 1, 1))
 		plot(x$ncomp, x$bic, type = "b", ylim = c(min(x$bic), max(x$bic)),
-	    main = paste(x$family, "mixture model selection by BIC"), xlab = "Number of components", ylab = "BIC")
+	       main = paste(family, "Mixture Model Selection by BIC"), 
+	       xlab = "Number of components", ylab = "BIC", xaxt = 'n')
+	  axis(side = 1, at = x$ncomp)
 	}
 }
 
