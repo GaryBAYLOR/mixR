@@ -106,3 +106,23 @@ For more examples please check the vignette [An Introduction to mixR](https://cr
 
 ## Contributor Code of Conduct
 Everyone is welcome to contribute to the project through reporting issues, posting feature requests, updating documentation, submitting pull requests, or contact the project maintainer directly. To maintain a friendly atmosphere and to collaborate in a fun and productive way, we expect contributors to abide by the [Contributor Code of Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/).
+
+## Citation
+
+Yu, Y., (2022). mixR: An R package for Finite Mixture Modeling for Both Raw and Binned Data. Journal of Open Source Software, 7(69), 4031, https://doi.org/10.21105/joss.04031
+
+BibTex information
+```
+@article{Yu2022,
+  doi = {10.21105/joss.04031},
+  url = {https://doi.org/10.21105/joss.04031},
+  year = {2022},
+  publisher = {The Open Journal},
+  volume = {7},
+  number = {69},
+  pages = {4031},
+  author = {Youjiao Yu},
+  title = {mixR: An R package for Finite Mixture Modeling for Both Raw and Binned Data},
+  journal = {Journal of Open Source Software}
+}
+```
