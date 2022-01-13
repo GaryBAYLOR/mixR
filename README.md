@@ -3,6 +3,7 @@
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/mixR)](https://cran.rstudio.com/web/packages/mixR/index.html)
 [![CRAN Monthly Downloads](https://cranlogs.r-pkg.org/badges/mixR)](https://cran.r-project.org/package=mixR)
 [![DOI](https://zenodo.org/badge/360674750.svg)](https://zenodo.org/badge/latestdoi/360674750)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.04031/status.svg)](https://doi.org/10.21105/joss.04031)
 
 <!-- badges: end -->
 
