@@ -44,9 +44,7 @@ initz <- function(x, ncomp, init.method = c("kmeans", "hclust")) {
 	pi <- count / sum(count)
 	mu <- sapply(res, mean)
 	sd <- sapply(res, sd)
-	if(any(is.na(sd))) {
-	    return(initz(x, ncomp, init.method))
-	}
+	sd[is.na(sd)] = 0.1
 	order <- order(mu)
 
 	pi <- pi[order]
