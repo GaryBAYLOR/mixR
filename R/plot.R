@@ -121,7 +121,7 @@ plot.mixfitEM = function(x,
   
   # add histogram
   if(add_hist) {
-    add_hist <- geom_histogram(aes(x = data, y = ..density..), breaks = breaks, color = "black",
+    add_hist <- geom_histogram(aes(x = data, y = after_stat(density)), breaks = breaks, color = "black",
                                fill = "white", size = 0.3) 
   } else {
     add_hist = NULL
